@@ -164,6 +164,75 @@ const SIG_DETAILS = {
       "Community of like-minded readers"
     ],
     quote: "Diving into a good book can spark imagination, fuel creativity and open doors to new perspectives."
+  },
+  "sps": {
+    title: "Signal Processing Society",
+    icon: Mic,
+    color: "from-blue-600 to-cyan-500",
+    gradient: "bg-gradient-to-br from-blue-600 via-cyan-600 to-teal-500",
+    description: "Advancing and disseminating state-of-the-art scientific information in signal processing while providing a venue for people to interact and exchange ideas.",
+    mission: "To advance and disseminate state-of-the-art scientific information and provide a venue for people to interact and exchange ideas in the signal processing domain.",
+    activities: [
+      "Specialized symposia on emerging technologies",
+      "Signal processing workshops",
+      "Technical seminars and webinars",
+      "Collaborative research projects",
+      "Member networking sessions"
+    ],
+    benefits: [
+      "Access to high-quality signal processing resources",
+      "Networking with experts in the field",
+      "Opportunities for collaboration",
+      "Stay updated with latest technical advancements",
+      "Participation in specialized events"
+    ],
+    quote: "Enabling technology for the generation, transformation, and interpretation of information."
+  },
+  "cs": {
+    title: "Computer Society",
+    icon: Code,
+    color: "from-orange-500 to-red-600",
+    gradient: "bg-gradient-to-br from-orange-500 via-red-500 to-rose-600",
+    description: "Promoting education, research, and practical applications in computer science and technology to bridge the gap between academia and industry.",
+    mission: "To promote education, research, and practical applications in computer science and technology, bridging the gap between academia and industry.",
+    activities: [
+      "Coding workshops and hackathons",
+      "Computer science seminars",
+      "Industry expert guest lectures",
+      "Hands-on technology sessions",
+      "Technical skill development programs"
+    ],
+    benefits: [
+      "Access to cutting-edge technical resources",
+      "Practical experience with industry tools",
+      "Networking with tech professionals",
+      "Empowerment for future tech leadership",
+      "Collaborative innovation environment"
+    ],
+    quote: "Raising innovative minds to create a highly skilled workforce in the tech industry."
+  },
+  "sight": {
+    title: "Special Interest Group on Humanitarian Technology",
+    icon: Users,
+    color: "from-blue-500 to-indigo-600",
+    gradient: "bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600",
+    description: "Leveraging technology for humanitarian causes and creating lasting, impactful change in underserved communities through engineering innovations.",
+    mission: "To leverage technology for humanitarian causes and create lasting, impactful change in underserved communities by solving social issues through engineering innovations.",
+    activities: [
+      "Humanitarian technology projects",
+      "Awareness programs on social issues",
+      "Sustainable technology workshops",
+      "Community outreach and engagement",
+      "Partnerships for social impact"
+    ],
+    benefits: [
+      "Hands-on experience in humanitarian projects",
+      "Development of social responsibility",
+      "Opportunity to create real-world impact",
+      "Skill development in sustainable engineering",
+      "Engagement in impactful social causes"
+    ],
+    quote: "To leverage technology for humanitarian causes and create lasting, impactful change."
   }
 };
 

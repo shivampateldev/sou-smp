@@ -1,7 +1,7 @@
 
 import { useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
-import Navbar from "@/components/Navbar";
+import PageLayout from "@/components/PageLayout";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { TypingAnimation } from "@/components/TypingAnimation";
@@ -17,10 +17,8 @@ export default function NotFound() {
   }, [location.pathname]);
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-
-      <main className="flex-grow flex items-center justify-center py-24">
+    <PageLayout showFooter>
+      <main className="pb-16 min-h-screen flex items-center justify-center py-24">
         <div className="text-center px-4">
           <h1 className="text-6xl md:text-8xl font-bold text-primary mb-6">404</h1>
           <h2 className="text-2xl md:text-3xl font-semibold mb-4">Page Not Found</h2>
@@ -35,7 +33,6 @@ export default function NotFound() {
           </Button>
         </div>
       </main>
-
-    </div>
+    </PageLayout>
   );
 }

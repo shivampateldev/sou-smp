@@ -8,7 +8,8 @@ import {
   Users, 
   LogOut,
   CalendarDays,
-  Landmark  // Added this import
+  Landmark,
+  Layers  // Added this import
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
@@ -98,6 +99,24 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, activeTab, onTabCha
                 <Landmark className="h-4 w-4 mr-2" />
                 Our Journey
               </Button>
+              
+              <Button
+                variant={activeTab === "sigs" ? "default" : "ghost"}
+                className="w-full justify-start h-9 xl:h-10 text-sm"
+                onClick={() => onTabChange("sigs")}
+              >
+                <Layers className="h-4 w-4 mr-2" />
+                SIGs
+              </Button>
+              
+              <Button
+                variant={activeTab === "users" ? "default" : "ghost"}
+                className="w-full justify-start h-9 xl:h-10 text-sm"
+                onClick={() => onTabChange("users")}
+              >
+                <Users className="h-4 w-4 mr-2" />
+                User Management
+              </Button>
             </nav>
             
             {/* Spacer that pushes the logout button to the bottom */}
@@ -185,7 +204,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, activeTab, onTabCha
               )}
 
               {/* Simple navigation buttons for mobile instead of tabs to avoid conflicts */}
-              <div className="grid grid-cols-5 gap-1 mt-3 sm:mt-4">
+              <div className="grid grid-cols-6 gap-1 mt-3 sm:mt-4">
                 <button
                   onClick={() => onTabChange("dashboard")}
                   className={`flex flex-col items-center justify-center py-2 rounded-lg ${
@@ -240,6 +259,28 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, activeTab, onTabCha
                 >
                   <Users className="h-4 w-4 sm:h-5 sm:w-5" />
                   <span className="text-[10px] sm:text-xs mt-1">Members</span>
+                </button>
+                <button
+                  onClick={() => onTabChange("sigs")}
+                  className={`flex flex-col items-center justify-center py-2 rounded-lg ${
+                    activeTab === "sigs" 
+                      ? "bg-blue-50 text-blue-700" 
+                      : "text-gray-600 hover:bg-gray-50"
+                  }`}
+                >
+                  <Layers className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <span className="text-[10px] sm:text-xs mt-1">SIGs</span>
+                </button>
+                <button
+                  onClick={() => onTabChange("users")}
+                  className={`flex flex-col items-center justify-center py-2 rounded-lg ${
+                    activeTab === "users" 
+                      ? "bg-blue-50 text-blue-700" 
+                      : "text-gray-600 hover:bg-gray-50"
+                  }`}
+                >
+                  <Users className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <span className="text-[10px] sm:text-xs mt-1">Users</span>
                 </button>
               </div>
             </div>

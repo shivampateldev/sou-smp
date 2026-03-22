@@ -1,4 +1,4 @@
-import Navbar from "@/components/Navbar";
+import PageLayout from "@/components/PageLayout";
 import { ChevronRight } from "lucide-react";
 import { TypingAnimation } from "@/components/TypingAnimation";
 
@@ -76,10 +76,8 @@ const FAQ_ITEMS = [
 
 export default function FAQ() {
     return (
-        <div className="flex flex-col min-h-screen bg-white dark:bg-[#0A0F1C]">
-            <Navbar />
-
-            <main className="flex-grow pt-24 pb-20">
+    <PageLayout showFooter>
+      <main className="pb-16 px-4">
                 {/* Page Header */}
                 <div className="border-b border-slate-100 dark:border-slate-800 pb-10 mb-10">
                     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
@@ -160,7 +158,6 @@ export default function FAQ() {
                     </div>
                 </div>
             </main>
-
-        </div>
-    );
+    </PageLayout>
+  );
 }

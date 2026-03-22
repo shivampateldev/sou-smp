@@ -9,43 +9,61 @@ export const sigItems: SIGItem[] = [
   {
     id: "soul-nurturing",
     title: "Soul Nurturing",
-    imageUrl: "/images/soul-nurturing.jpg",
+    imageUrl: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=800",
     details: "A gentle space for reflection, balance and personal growth through mindful conversations and calming practices."
   },
   {
     id: "wealth-wire",
     title: "Wealth Wire",
-    imageUrl: "/images/wealth-wire.jpg",
+    imageUrl: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=800",
     details: "Empowering individuals with practical financial knowledge from budgeting to stock market fundamentals."
   },
   {
     id: "ml-geeks",
     title: "ML Geeks",
-    imageUrl: "/images/ml-geeks.jpg",
+    imageUrl: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80&w=800",
     details: "Fostering curiosity and building strong foundations in machine learning and artificial intelligence."
   },
   {
     id: "mind-marathon",
     title: "Mind Marathon",
-    imageUrl: "/images/mind-marathon.jpg",
+    imageUrl: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&q=80&w=800",
     details: "Cultivating logical thinking, problem-solving abilities and mental agility through engaging challenges."
   },
   {
     id: "tech-caffeine",
     title: "Tech Caffeine",
-    imageUrl: "/images/tech-caffeine.jpg",
+    imageUrl: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=800",
     details: "Exploring and simplifying the latest technological trends shaping our world."
   },
   {
     id: "speak-to-lead",
     title: "Speak to Lead",
-    imageUrl: "/images/speak-to-lead.jpg",
+    imageUrl: "https://images.unsplash.com/photo-1475721027785-f74dea327912?auto=format&fit=crop&q=80&w=800",
     details: "Transforming communication into a powerful leadership skill through interactive sessions and practice."
   },
   {
     id: "paperback-pals",
     title: "Paperback Pals",
-    imageUrl: "/images/paperback-pals.jpg",
+    imageUrl: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&q=80&w=800",
     details: "Bringing together book lovers and curious minds in a vibrant, idea-driven space."
+  },
+  {
+    id: "sps",
+    title: "Signal Processing Society",
+    imageUrl: "http://ieee.socet.edu.in/wp-content/uploads/2025/12/IEEE-SPS-SOU-SBC-Full-Color.png",
+    details: "Advancing and disseminating state-of-the-art scientific information in signal processing while providing a venue for people to interact and exchange ideas."
+  },
+  {
+    id: "cs",
+    title: "Computer Society",
+    imageUrl: "http://ieee.socet.edu.in/wp-content/uploads/2025/12/IEEE-Computer-Society-SBC.png",
+    details: "Promoting education, research, and practical applications in computer science and technology to bridge the gap between academia and industry."
+  },
+  {
+    id: "sight",
+    title: "Special Interest Group on Humanitarian Technology",
+    imageUrl: "http://ieee.socet.edu.in/wp-content/uploads/2026/03/IEEE-SIGHT-SOU-SB-NEW.png",
+    details: "Leveraging technology for humanitarian causes and creating lasting, impactful change in underserved communities through engineering innovations."
   }
 ];

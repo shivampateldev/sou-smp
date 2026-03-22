@@ -464,25 +464,25 @@ img {
   border-color: hsl(142 70% 48% / 0.45);
 }
 
-/* ── SIGHT Reddish-Brown ── */
-.theme-card-emerald {
-  background: linear-gradient(135deg, hsl(15 65% 38% / 0.08) 0%, hsl(20 60% 48% / 0.04) 100%);
-  border: 1px solid hsl(15 65% 42% / 0.25);
-  box-shadow: 0 4px 24px hsl(15 65% 42% / 0.08), inset 0 1px 0 hsl(15 65% 78% / 0.1);
+/* ── SIGHT Red ── */
+.theme-card-red {
+  background: linear-gradient(135deg, hsl(350 85% 42% / 0.08) 0%, hsl(350 85% 42% / 0.04) 100%);
+  border: 1px solid hsl(350 85% 42% / 0.25);
+  box-shadow: 0 4px 24px hsl(350 85% 42% / 0.08), inset 0 1px 0 hsl(350 85% 78% / 0.1);
 }
 
-.theme-card-emerald::after {
+.theme-card-red::after {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, hsl(15 65% 30%), hsl(20 70% 55%), hsl(15 65% 30%));
+  background: linear-gradient(90deg, hsl(350 85% 42%), hsl(350 85% 65%), hsl(350 85% 42%));
   border-radius: 1rem 1rem 0 0;
 }
 
-.theme-card-emerald:hover {
-  box-shadow: 0 8px 32px hsl(15 65% 42% / 0.18), inset 0 1px 0 hsl(15 65% 78% / 0.15);
-  border-color: hsl(15 65% 42% / 0.45);
+.theme-card-red:hover {
+  box-shadow: 0 8px 32px hsl(350 85% 42% / 0.18), inset 0 1px 0 hsl(350 85% 78% / 0.15);
+  border-color: hsl(350 85% 42% / 0.45);
 }

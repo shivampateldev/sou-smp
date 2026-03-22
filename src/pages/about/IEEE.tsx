@@ -1,21 +1,22 @@
-import Navbar from "@/components/Navbar";
+import PageLayout from "@/components/PageLayout";
 import OrganizationMeta from "@/components/OrganizationMeta";
+import { useTheme } from "@/lib/theme-provider";
+import { LOGOS } from "@/lib/logos";
 
 export default function IEEE() {
+  const { theme } = useTheme();
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground">
-      <Navbar />
-
-      <main className="flex-grow pt-32 pb-16">
+    <PageLayout showFooter>
+      <main className="pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Page Heading */}
           <div className="mb-12 text-center flex flex-col items-center">
             <div className="animate-fade-in-up mb-6 object-contain">
               <div className="ieee-logo-glow ieee-logo-glow--blue">
                 <img
-                  src="/ieee-logo.svg"
+                  src={LOGOS[theme === "dark" ? "DARK" : "LIGHT"].IEEE_GLOBAL}
                   alt="IEEE Logo"
-                  className="w-full max-w-xs md:max-w-md h-auto hover:scale-105 transition-transform duration-500"
+                  className="h-32 md:h-44 mx-auto mb-6 object-contain hover:scale-105 transition-transform duration-500"
                 />
               </div>
             </div>
@@ -42,7 +43,6 @@ export default function IEEE() {
           </div>
         </div>
       </main>
-
-    </div>
+    </PageLayout>
   );
 }

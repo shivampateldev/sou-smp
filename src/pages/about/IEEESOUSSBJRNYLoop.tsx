@@ -173,6 +173,7 @@ export default function IEEESOUSSBJRNYLoop() {
               src={item.imageUrl}
               alt={item.title}
               className="w-full h-full object-cover absolute inset-0 transition-transform duration-700 hover:scale-105"
+              style={{ objectFit: 'cover', aspectRatio: '16/9' }}
               onError={handleImageError}
             />
 

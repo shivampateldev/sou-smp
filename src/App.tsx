@@ -7,6 +7,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import InitialLoader from "@/components/InitialLoader";
 import AIAssistant from "@/components/AIAssistant";
+import { Button } from "@/components/ui/button";
+import { Toaster as ToasterSonner } from "@/components/ui/sonner";
 
 // Main Pages
 import Index from "./pages/Index";
@@ -19,6 +21,10 @@ import UpcomingEvents from "./pages/UpcomingEvents";
 import Contact from "./pages/Contact";
 import Join from "./pages/Join";
 import NotFound from "./pages/NotFound";
+import Login from "./pages/Login";
+import BlogList from "./pages/blogs/BlogList";
+import BlogDetail from "./pages/blogs/BlogDetail";
+import WriteBlog from "./pages/blogs/WriteBlog";
 
 // SIGs Pages
 import SIGs from "./pages/SIGs";
@@ -68,80 +74,118 @@ console.warn = (...args) => {
   originalConsoleWarn.apply(console, args);
 };
 
+// Simple Error Boundary
+class ErrorBoundary extends React.Component<{children: React.ReactNode}, {hasError: boolean}> {
+  constructor(props: {children: React.ReactNode}) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: any, errorInfo: any) {
+    console.error("ErrorBoundary caught an error:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-white p-4 text-center">
+          <div>
+            <h1 className="text-2xl font-bold mb-4">Something went wrong.</h1>
+            <p className="mb-4">Please try refreshing the page.</p>
+            <Button onClick={() => window.location.reload()}>Refresh Page</Button>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-        <InitialLoader />
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-            <ScrollToTop />
-            <ScrollRevealProvider />
-            <ScrollProgressBar />
-            <AIAssistant />
-            <Routes>
-              {/* Main Pages */}
-              <Route path="/" element={<Index />} />
-              <Route path="/events" element={<Events />} />
-              <Route path="/achievement" element={<Achievement />} />
-              <Route path="/achievement/branch-awards" element={<BranchAwards />} />
-              <Route path="/achievement/newsletter" element={<Newsletter />} />
-              <Route path="/achievement/student" element={<StudentAchievements />} />
-              <Route path="/achievement/upcoming-events" element={<UpcomingEvents />} />
-              <Route path="/achievements" element={<Navigate to="/achievement" replace />} />
-              <Route path="/awards" element={<Navigate to="/achievement" replace />} />
-              <Route path="/bylaws" element={<Bylaws />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/join" element={<Join />} />
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+          <InitialLoader />
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+              <ScrollToTop />
+              <ScrollRevealProvider />
+              <ScrollProgressBar />
+              <AIAssistant />
+              <Routes>
+                {/* Main Pages */}
+                <Route path="/" element={<Index />} />
+                <Route path="/events" element={<Events />} />
+                <Route path="/achievement" element={<Achievement />} />
+                <Route path="/achievement/branch-awards" element={<BranchAwards />} />
+                <Route path="/achievement/newsletter" element={<Newsletter />} />
+                <Route path="/achievement/student" element={<StudentAchievements />} />
+                <Route path="/achievement/upcoming-events" element={<UpcomingEvents />} />
+                <Route path="/achievements" element={<Navigate to="/achievement" replace />} />
+                <Route path="/awards" element={<Navigate to="/achievement" replace />} />
+                <Route path="/bylaws" element={<Bylaws />} />
+                <Route path="/faq" element={<FAQ />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/join" element={<Join />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/blogs" element={<BlogList />} />
+                <Route path="/blogs/:id" element={<BlogDetail />} />
+                <Route path="/write-blog" element={<WriteBlog />} />
 
-              {/* SIGs Pages */}
-              <Route path="/sigs" element={<SIGs />} />
-              <Route path="/sigs/:id" element={<SIGDetails />} />
+                {/* SIGs Pages */}
+                <Route path="/sigs" element={<SIGs />} />
+                <Route path="/sigs/:id" element={<SIGDetails />} />
 
-              {/* About Pages */}
-              <Route path="/about/ieee" element={<IEEE />} />
-              <Route path="/about/ieee-sou-sb" element={<IEEESOUSSB />} />
-              <Route path="/about/ieee-sou-wie-sb-ag" element={<IEEEOUSSBWIE />} />
-              <Route path="/about/ieee-sou-sb-journey" element={<IEEESOUSSBJRNY />} />
-              <Route path="/about/ieee-sou-sb-journey-loop" element={<IEEESOUSSBJRNYLoop />} />
-              <Route path="/about/ieee-sou-sb-journey-loop/:id" element={<JourneyDetails />} />
-              <Route path="/about/ieee-sou-sps-sbc" element={<IEEESOUSPSSBC />} />
-              <Route path="/about/ieee-sou-cs-sbc" element={<IEEESOUSCSSBC />} />
-              <Route path="/about/ieee-sou-sight-sbg" element={<IEEESOUSSIGHTSBG />} />
+                {/* About Pages */}
+                <Route path="/about/ieee" element={<IEEE />} />
+                <Route path="/about/ieee-sou-sb" element={<IEEESOUSSB />} />
+                <Route path="/about/ieee-sou-wie-sb-ag" element={<IEEEOUSSBWIE />} />
+                <Route path="/about/ieee-sou-sb-journey" element={<IEEESOUSSBJRNY />} />
+                <Route path="/about/ieee-sou-sb-journey-loop" element={<IEEESOUSSBJRNYLoop />} />
+                <Route path="/about/ieee-sou-sb-journey-loop/:id" element={<JourneyDetails />} />
+                <Route path="/about/ieee-sou-sps-sbc" element={<IEEESOUSPSSBC />} />
+                <Route path="/about/ieee-sou-cs-sbc" element={<IEEESOUSCSSBC />} />
+                <Route path="/about/ieee-sou-sight-sbg" element={<IEEESOUSSIGHTSBG />} />
 
-              {/* Team Pages */}
-              <Route path="/team/faculty-advisor" element={<TeamFaculty />} />
-              <Route path="/team/advisory-board" element={<TeamAdvisory />} />
-              <Route path="/team/executive-members" element={<TeamExecutive />} />
-              <Route path="/team/core-members" element={<TeamCore />} />
-              <Route path="/team/members" element={<TeamMembers />} />
+                {/* Team Pages */}
+                <Route path="/team/faculty-advisor" element={<TeamFaculty />} />
+                <Route path="/team/advisory-board" element={<TeamAdvisory />} />
+                <Route path="/team/executive-members" element={<TeamExecutive />} />
+                <Route path="/team/core-members" element={<TeamCore />} />
+                <Route path="/team/members" element={<TeamMembers />} />
 
-              {/* Auth & Admin Panel - Hidden Route (Only accessible via direct URL) */}
-              <Route path="/authentication" element={<Authentication />} />
-              <Route
-                path="/ieee-admin-portal-sou-2025"
-                element={
-                  <ProtectedRoute>
-                    <Admin />
-                  </ProtectedRoute>
-                }
-              />
+                {/* Auth & Admin Panel - Hidden Route (Only accessible via direct URL) */}
+                <Route path="/authentication" element={<Authentication />} />
+                <Route
+                  path="/ieee-admin-portal-sou-2025"
+                  element={
+                    <ProtectedRoute>
+                      <Admin />
+                    </ProtectedRoute>
+                  }
+                />
 
-              {/* Details Pages */}
-              <Route path="/eventdetails/:id" element={<EventDetails />} />
-              <Route path="/awarddetails/:id" element={<AwardDetails />} />
-              <Route path="/memberdetails/:id" element={<MemberDetails />} />
+                {/* Details Pages */}
+                <Route path="/eventdetails/:id" element={<EventDetails />} />
+                <Route path="/awarddetails/:id" element={<AwardDetails />} />
+                <Route path="/memberdetails/:id" element={<MemberDetails />} />
 
-              {/* 404 Fallback */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-      </ThemeProvider>
-    </QueryClientProvider>
+                {/* 404 Fallback */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
 

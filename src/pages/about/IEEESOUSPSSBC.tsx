@@ -1,20 +1,21 @@
-import Navbar from "@/components/Navbar";
+import PageLayout from "@/components/PageLayout";
 import OrganizationMeta from "@/components/OrganizationMeta";
+import { useTheme } from "@/lib/theme-provider";
+import { LOGOS } from "@/lib/logos";
 
 export default function IEEESOUSPSSBC() {
+  const { theme } = useTheme();
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground">
-      <Navbar />
-
-      <main className="flex-grow pt-32 pb-16">
+    <PageLayout showFooter>
+      <main className="pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Page Heading */}
           <div className="mb-12 text-center">
             <div className="ieee-logo-glow ieee-logo-glow--green mx-auto">
               <img
-                src="http://ieee.socet.edu.in/wp-content/uploads/2025/12/IEEE-SPS-SOU-SBC-Full-Color.png"
+                src={LOGOS[theme === "dark" ? "DARK" : "LIGHT"].SPS}
                 alt="IEEE SOU SPS Logo"
-                className="h-32 md:h-48 mx-auto mb-6 object-contain animate-fade-in-up"
+                className="h-32 md:h-44 mx-auto mb-6 object-contain animate-fade-in-up"
               />
             </div>
             <h1 className="sr-only">IEEE SOU SPS SBC</h1>
@@ -61,7 +62,6 @@ export default function IEEESOUSPSSBC() {
           </div>
         </div>
       </main>
-
-    </div>
+    </PageLayout>
   );
 }

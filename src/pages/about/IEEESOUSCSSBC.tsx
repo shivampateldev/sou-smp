@@ -1,20 +1,21 @@
-import Navbar from "@/components/Navbar";
+import PageLayout from "@/components/PageLayout";
 import OrganizationMeta from "@/components/OrganizationMeta";
+import { useTheme } from "@/lib/theme-provider";
+import { LOGOS } from "@/lib/logos";
 
 export default function IEEESOUSCSSBC() {
+  const { theme } = useTheme();
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground">
-      <Navbar />
-
-      <main className="flex-grow pt-32 pb-16">
+    <PageLayout showFooter>
+      <main className="pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Page Heading */}
           <div className="mb-10 text-center">
-            <div className="ieee-logo-glow ieee-logo-glow--yellow">
+            <div className="ieee-logo-glow ieee-logo-glow--orange">
               <img
-                src="http://ieee.socet.edu.in/wp-content/uploads/2025/12/IEEE-Computer-Society-SBC.png"
-                alt="IEEE SOU CS SBC Logo"
-                className="h-20 md:h-48 mx-auto mb-6 object-contain animate-fade-in-up"
+                src={LOGOS[theme === "dark" ? "DARK" : "LIGHT"].CS}
+                alt="IEEE SOU CS Logo"
+                className="h-32 md:h-44 mx-auto mb-6 object-contain animate-fade-in-up"
               />
             </div>
             <h1 className="sr-only">IEEE SOU CS SBC</h1>
@@ -63,7 +64,6 @@ export default function IEEESOUSCSSBC() {
           </div>
         </div>
       </main>
-
-    </div>
+    </PageLayout>
   );
 }

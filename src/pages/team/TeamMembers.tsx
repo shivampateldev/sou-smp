@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Search, Linkedin } from "lucide-react";
-import Navbar from "@/components/Navbar";
+import PageLayout from "@/components/PageLayout";
 import { TypingAnimation } from "@/components/TypingAnimation";
 import { db } from "@/firebase"; // Import Firebase configuration
 import { collection, query, where, getDocs } from "firebase/firestore";
@@ -41,9 +41,8 @@ export default function TeamMembers() {
   const currentItems = filtered.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-grow pt-24 pb-16 animate-fade-in">
+    <PageLayout showFooter>
+      <main className="pb-16 animate-fade-in">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8 text-center">
             <h1 className="text-4xl font-bold mb-2">Student Members</h1>
@@ -120,6 +119,6 @@ export default function TeamMembers() {
           </div>
         </div>
       </main>
-    </div>
+    </PageLayout>
   );
 }

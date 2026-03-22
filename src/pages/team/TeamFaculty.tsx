@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Search, Linkedin } from "lucide-react";
-import Navbar from "@/components/Navbar";
+import PageLayout from "@/components/PageLayout";
 import { Input } from "@/components/ui/input";
 import { TypingAnimation } from "@/components/TypingAnimation";
 import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
@@ -64,9 +64,8 @@ setFacultyMembers(data);
   const sortedOtherMembers = otherMembers; // Already sorted by displayOrder ascending
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-grow pt-24 pb-16 animate-fade-in">
+    <PageLayout showFooter>
+      <main className="pb-16 animate-fade-in">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
@@ -178,6 +177,6 @@ setFacultyMembers(data);
           </div>
         </div>
       </main>
-    </div>
+    </PageLayout>
   );
 }

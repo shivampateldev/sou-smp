@@ -1,20 +1,21 @@
-import Navbar from "@/components/Navbar";
+import PageLayout from "@/components/PageLayout";
 import OrganizationMeta from "@/components/OrganizationMeta";
+import { useTheme } from "@/lib/theme-provider";
+import { LOGOS } from "@/lib/logos";
 
 export default function IEEESOUSSB() {
+  const { theme } = useTheme();
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground">
-      <Navbar />
-
-      <main className="flex-grow pt-32 pb-16">
+    <PageLayout showFooter>
+      <main className="pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-12 text-center">
             <div className="ieee-logo-glow ieee-logo-glow--blue mx-auto inline-block mb-4">
               <img
-                src="http://ieee.socet.edu.in/wp-content/uploads/2026/03/IEEE-SOU-SB-Logo-2-scaled.png"
+                src={LOGOS[theme === "dark" ? "DARK" : "LIGHT"].IEEESOUSSB}
                 alt="IEEE SOU SB Logo"
-                className="h-24 md:h-48 mx-auto mb-6 object-contain animate-fade-in-up"
+                className={`h-32 md:h-44 mx-auto mb-6 object-contain animate-fade-in-up ${theme !== "dark" ? "mix-blend-multiply" : ""}`}
               />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-4 animate-fade-in-up">IEEE SOU SB</h1>
@@ -63,7 +64,6 @@ export default function IEEESOUSSB() {
           </div>
         </div>
       </main>
-
-    </div>
+    </PageLayout>
   );
 }

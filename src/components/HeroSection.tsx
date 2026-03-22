@@ -36,7 +36,7 @@ export default function HeroSection() {
       />
 
       {/* Overlay — dark at top, fades to page background at bottom */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
+      <div className="absolute inset-0 z-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20" />
 
       {/* Animated grid lines overlay */}
       <div
@@ -55,19 +55,19 @@ export default function HeroSection() {
           className="mb-6"
           style={{ transform: `translateY(${scrollY * -0.15}px)` }}
         >
-          <span className="block text-white text-4xl md:text-6xl font-bold tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.65)]">
+          <span className="block text-white text-4xl md:text-6xl font-bold tracking-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.85)]">
             <span className="reveal fade-up inline-block">Welcome&nbsp;to</span>
           </span>
-          <span className="block text-white text-4xl md:text-6xl font-bold tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.65)]">
+          <span className="block text-white text-4xl md:text-6xl font-bold tracking-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.85)]">
             <span className="reveal fade-up delay-2 inline-block">Silver&nbsp;Oak&nbsp;University</span>
           </span>
-          <span className="block text-white text-4xl md:text-6xl font-bold tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.65)]">
+          <span className="block text-white text-4xl md:text-6xl font-bold tracking-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.85)]">
             <span className="reveal fade-up delay-3 inline-block">IEEE&nbsp;Student&nbsp;Branch</span>
           </span>
         </div>
 
         {/* Subtitle */}
-        <p className="reveal fade-up delay-4 text-white text-lg md:text-xl max-w-3xl mx-auto mb-12 opacity-90">
+        <p className="reveal fade-up delay-4 text-white text-lg md:text-xl max-w-3xl mx-auto mb-12 opacity-95 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
           Empowering innovation, fostering collaboration, and shaping the future of technology
         </p>
       </div>

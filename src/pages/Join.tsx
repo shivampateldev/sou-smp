@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import Navbar from "@/components/Navbar";
+import PageLayout from "@/components/PageLayout";
 import { TypingAnimation } from "@/components/TypingAnimation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -68,10 +68,8 @@ export default function Join() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-300">
-      <Navbar />
-
-      <main className="flex-grow pt-24 pb-16 px-4">
+    <PageLayout showFooter>
+      <main className="pb-16 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="mb-12 text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Join IEEE SOU SB</h1>
@@ -167,7 +165,6 @@ export default function Join() {
           </div>
         </div>
       </main>
-
-    </div>
+    </PageLayout>
   );
 }

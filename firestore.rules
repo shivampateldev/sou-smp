@@ -2,39 +2,53 @@
 
 rules_version = '2';
 service cloud.firestore {
-  // Allow read access to public data (events, awards, members for display)
   match /databases/{database}/documents {
     
-    // Public read access for frontend display
+    // Blogs collection
+    match /blogs/{blogId} {
+      allow read: if true;
+      allow write: if request.auth != null && isAuthorized(request.auth.token.email);
+    }
+    
+    // Users collection
+    match /users/{userId} {
+      // Allow read for authenticated users to check their own role/existence
+      allow read: if request.auth != null;
+      // Only admins can write to users collection
+      allow write: if request.auth != null && isAdminRole(request.auth.token.email);
+    }
+
+    // Existing collections
     match /events/{eventId} {
       allow read: if true;
-      allow write: if request.auth != null && isAdmin(request.auth.uid);
+      allow write: if request.auth != null && isAdminRole(request.auth.token.email);
     }
     
     match /awards/{awardId} {
       allow read: if true;
-      allow write: if request.auth != null && isAdmin(request.auth.uid);
+      allow write: if request.auth != null && isAdminRole(request.auth.token.email);
     }
     
     match /members/{memberId} {
       allow read: if true;
-      allow write: if request.auth != null && isAdmin(request.auth.uid);
+      allow write: if request.auth != null && isAdminRole(request.auth.token.email);
     }
     
     match /journey/{journeyId} {
       allow read: if true;
-      allow write: if request.auth != null && isAdmin(request.auth.uid);
+      allow write: if request.auth != null && isAdminRole(request.auth.token.email);
     }
-    
-    // Admin-only collections
-    match /admin/{docId} {
-      allow read, write: if request.auth != null && isAdmin(request.auth.uid);
+
+    // Helper functions
+    function isAuthorized(email) {
+      // Check if user exists in 'users' collection with specified email
+      return exists(/databases/$(database)/documents/users/$(email)) && 
+             (get(/databases/$(database)/documents/users/$(email)).data.role in ['admin', 'writer']);
     }
-    
-    // Utility functions
-    function isAdmin(uid) {
-      // Check if user is in the admins collection
-      return get(/databases/$(database)/documents/admins/$(uid)).data.role == 'admin';
+
+    function isAdminRole(email) {
+      return exists(/databases/$(database)/documents/users/$(email)) && 
+             get(/databases/$(database)/documents/users/$(email)).data.role == 'admin';
     }
   }
 }

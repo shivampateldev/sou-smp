@@ -1,24 +1,25 @@
-import Navbar from "@/components/Navbar";
+import PageLayout from "@/components/PageLayout";
 import OrganizationMeta from "@/components/OrganizationMeta";
+import { useTheme } from "@/lib/theme-provider";
+import { LOGOS } from "@/lib/logos";
 
 export default function IEEEOUSSBWIE() {
+  const { theme } = useTheme();
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground">
-      <Navbar />
-
-      <main className="flex-grow pt-32 pb-16">
+    <PageLayout showFooter>
+      <main className="pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Page Heading */}
           <div className="mb-12 text-center">
             <div className="ieee-logo-glow ieee-logo-glow--purple mx-auto">
               <img
-                src="http://ieee.socet.edu.in/wp-content/uploads/2025/12/IEEE-SOU-WIE-AG-Logo-Coloured-scaled.png"
+                src={LOGOS[theme === "dark" ? "DARK" : "LIGHT"].WIE}
                 alt="IEEE SOU WIE Logo"
-                className="h-20 md:h-28 mx-auto mb-6 object-contain animate-fade-in-up"
+                className="h-32 md:h-44 mx-auto mb-6 object-contain animate-fade-in-up"
               />
             </div>
-            <h1 className="sr-only">IEEE SOU WIE AG</h1>
-            <p className="text-2xl md:text-3xl font-bold mb-2 animate-fade-in-up">IEEE SOU WIE AG</p>
+            <h1 className="sr-only">IEEE SOU WIE SB AG</h1>
+            <p className="text-2xl md:text-3xl font-bold mb-2 animate-fade-in-up">IEEE SOU WIE SB AG</p>
             <OrganizationMeta ouCode="SBA20233" nomenclature="Silver Oak University, IEEE WIE Affinity Group" />
             <div className="w-24 h-1.5 bg-primary mx-auto rounded-full mb-8 animate-fade-in-up animation-delay-300" />
           </div>
@@ -50,18 +51,17 @@ export default function IEEEOUSSBWIE() {
 
             {/* About Section */}
             <section className="theme-card theme-card-purple animate-fade-in-up animation-delay-900">
-              <h2 className="text-2xl font-semibold mb-6">About IEEE SOU WIE AG</h2>
+              <h2 className="text-2xl font-semibold mb-6">About IEEE SOU WIE SB AG</h2>
               <p className="mb-4">
                 IEEE WIE is a global network of IEEE members and volunteers dedicated to promoting women engineers and scientists, and inspiring girls around the world to follow their academic interests in a career in engineering and science. It envisions a vibrant community of IEEE women and men by collectively using their diverse talents to innovate for the benefit of humanity.
               </p>
               <p>
-                With the same vision and mission, IEEE SOU WIE AG was established in 2019, and today, it is the largest affinity group in the Gujarat Section with 32 members. Starting from its inception, IEEE SOU WIE AG has carried out multiple campaigns and initiatives emphasizing the betterment of society. Alongside this, the AG has organized various technical and non-technical events & talks, that have helped many students to uplift their technical and interpersonal skills.
+                With the same vision and mission, IEEE SOU WIE SB AG was established in 2019, and today, it is the largest affinity group in the Gujarat Section with 32 members. Starting from its inception, IEEE SOU WIE SB AG has carried out multiple campaigns and initiatives emphasizing the betterment of society. Alongside this, the AG has organized various technical and non-technical events & talks, that have helped many students to uplift their technical and interpersonal skills.
               </p>
             </section>
           </div>
         </div>
       </main>
-
-    </div>
+    </PageLayout>
   );
 }

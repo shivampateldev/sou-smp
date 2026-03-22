@@ -1,21 +1,21 @@
-import Navbar from "@/components/Navbar";
+import PageLayout from "@/components/PageLayout";
 import OrganizationMeta from "@/components/OrganizationMeta";
+import { useTheme } from "@/lib/theme-provider";
+import { LOGOS } from "@/lib/logos";
 
 export default function IEEESOUSSIGHTSBG() {
+  const { theme } = useTheme();
   return (
-
-    <div className="flex flex-col min-h-screen bg-background text-foreground">
-      <Navbar />
-
-      <main className="flex-grow pt-32 pb-16">
+    <PageLayout showFooter>
+      <main className="pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Heading */}
           <div className="mb-12 text-center">
-            <div className="ieee-logo-glow ieee-logo-glow--brown mx-auto inline-block mb-4">
+            <div className="ieee-logo-glow ieee-logo-glow--orange mx-auto inline-block mb-4">
               <img
-                src="http://ieee.socet.edu.in/wp-content/uploads/2026/03/IEEE-SIGHT-SOU-SB-NEW.png"
-                alt="IEEE SOU SIGHT SBG Logo"
-                className="h-24 md:h-48 mx-auto mb-6 object-contain animate-fade-in-up"
+                src={LOGOS[theme === "dark" ? "DARK" : "LIGHT"].SIGHT}
+                alt="IEEE SOU SIGHT Logo"
+                className="h-32 md:h-44 mx-auto mb-6 object-contain animate-fade-in-up"
               />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold animate-fade-in-up px-4">
@@ -28,7 +28,7 @@ export default function IEEESOUSSIGHTSBG() {
           {/* Sections */}
           <div className="prose dark:prose-invert max-w-none">
             {/* Vision */}
-            <section className="mb-12 theme-card theme-card-emerald animate-fade-in-up animation-delay-500">
+            <section className="mb-12 theme-card theme-card-orange animate-fade-in-up animation-delay-500">
               <h2 className="text-2xl font-semibold mb-6">Vision</h2>
               <p>
                 To leverage technology for humanitarian causes and create lasting, impactful change in underserved communities by improving access to basic resources, education, and healthcare.
@@ -36,7 +36,7 @@ export default function IEEESOUSSIGHTSBG() {
             </section>
 
             {/* Mission */}
-            <section className="mb-12 theme-card theme-card-emerald animate-fade-in-up animation-delay-700">
+            <section className="mb-12 theme-card theme-card-orange animate-fade-in-up animation-delay-700">
               <h2 className="text-2xl font-semibold mb-6">Mission</h2>
               <ul className="list-disc pl-5 space-y-2">
                 <li>Utilize technology and engineering to address real-world challenges faced by communities in need.</li>
@@ -48,7 +48,7 @@ export default function IEEESOUSSIGHTSBG() {
             </section>
 
             {/* About */}
-            <section className="theme-card theme-card-emerald animate-fade-in-up animation-delay-900">
+            <section className="theme-card theme-card-orange animate-fade-in-up animation-delay-900">
               <h2 className="text-2xl font-semibold mb-6">About IEEE SOU SIGHT SBG</h2>
               <p className="mb-4">
                 IEEE SOU SIGHT SBG (Special Interest Group on Humanitarian Technology) was formed to serve society using technology for the betterment of underserved communities. It focuses on solving social issues through engineering innovations.
@@ -60,7 +60,6 @@ export default function IEEESOUSSIGHTSBG() {
           </div>
         </div>
       </main>
-
-    </div>
+    </PageLayout>
   );
 }

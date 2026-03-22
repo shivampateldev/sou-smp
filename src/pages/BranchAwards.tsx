@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import { Search } from "lucide-react";
-import Navbar from "@/components/Navbar";
+import PageLayout from "@/components/PageLayout";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -48,10 +48,8 @@ export default function BranchAwards() {
   );
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-
-      <main className="flex-grow pt-24 pb-16">
+    <PageLayout showFooter>
+      <main className="pb-16 px-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Branch Awards</h1>
@@ -115,6 +113,6 @@ export default function BranchAwards() {
           </div>
         </div>
       </main>
-    </div>
+    </PageLayout>
   );
 }

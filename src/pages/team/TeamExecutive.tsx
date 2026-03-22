@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Search, Linkedin, ChevronLeft, ChevronRight } from "lucide-react";
-import Navbar from "@/components/Navbar";
+import PageLayout from "@/components/PageLayout";
 import { Input } from "@/components/ui/input";
 import { TypingAnimation } from "@/components/TypingAnimation";
 import { db } from "@/firebase";
@@ -86,9 +86,8 @@ export default function TeamExecutive() {
 
   // ── render ───────────────────────────────────────────────────────────────
   return (
-    <div className="flex flex-col min-h-screen bg-white dark:bg-[#0F172A]">
-      <Navbar />
-      <main className="flex-grow pt-24 pb-16 animate-fade-in bg-white dark:bg-[#0F172A]">
+    <PageLayout showFooter>
+      <main className="pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Page heading */}
@@ -251,6 +250,6 @@ export default function TeamExecutive() {
           )}
         </div>
       </main>
-    </div>
+    </PageLayout>
   );
 }

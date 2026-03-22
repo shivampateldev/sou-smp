@@ -1,12 +1,10 @@
-import Navbar from "@/components/Navbar";
+import PageLayout from "@/components/PageLayout";
 import { TypingAnimation } from "@/components/TypingAnimation";
 
 export default function Newsletter() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-
-      <main className="flex-grow pt-24 pb-16">
+    <PageLayout showFooter>
+      <main className="pb-16 min-h-screen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Newsletter</h1>
@@ -22,6 +20,6 @@ export default function Newsletter() {
           </div>
         </div>
       </main>
-    </div>
+    </PageLayout>
   );
 }

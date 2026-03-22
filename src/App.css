@@ -30,10 +30,10 @@
   --cs-yellow-hover: rgba(234, 179, 8, 0.45);
   --cs-yellow-tint: rgba(234, 179, 8, 0.10);
 
-  --sight-red: #ef4444;
-  --sight-red-border: rgba(239, 68, 68, 0.15);
-  --sight-red-hover: rgba(239, 68, 68, 0.45);
-  --sight-red-tint: rgba(239, 68, 68, 0.10);
+  --sight-red: #ff0000;
+  --sight-red-border: rgba(255, 27, 27, 0.942);
+  --sight-red-hover: rgba(255, 9, 9, 0.962);
+  --sight-red-tint: rgba(209, 23, 23, 0.875);
 
   --navbar-height: 7rem;
 }
@@ -226,8 +226,8 @@
 
 /* SIGHT — reddish brown */
 .ieee-logo-glow--brown {
-  --glow-color: rgba(161, 88, 46, 0.55);
-  --beam-color: rgba(217, 150, 107, 0.28);
+  --glow-color: rgba(255, 3, 54, 0.95);
+  --beam-color: rgba(238, 14, 48, 0.943);
 }
 
 .ieee-logo-glow--orange {
@@ -706,8 +706,8 @@
 .glass-card--red {
   border-color: var(--sight-red-border);
   --gc-from: var(--sight-red-tint);
-  --gc-to: rgba(252, 165, 165, .10);
-  --gc-blob: rgba(239, 68, 68, .20);
+  --gc-to: rgba(255, 0, 0, 0.985);
+  --gc-blob: rgba(255, 0, 0, 0.853);
 }
 
 .glass-card--red:hover {

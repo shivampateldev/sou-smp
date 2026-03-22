@@ -7,8 +7,11 @@ import MemberModal from "../Admin/MemberModal";
 import MemberPreviewList from "../Admin/MemberPreviewList";
 import JourneyModal from "../Admin/JourneyModal";
 import JourneyPreviewList from "../Admin/JourneyPreviewList";
+import SIGPreviewList from "../Admin/SIGPreviewList";
 import Dashboard from "../Admin/Dashboard";
 import AdminLayout from "../Admin/AdminLayout";
+import UserManagement from "../Admin/UserManagement";
+import UserModal from "../Admin/UserModal";
 import { db, auth } from "../firebase";
 import { doc, deleteDoc, collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -20,9 +23,11 @@ const Admin = () => {
   const [showEventModal, setShowEventModal] = useState(false);
   const [showAwardModal, setShowAwardModal] = useState(false);
   const [showMemberModal, setShowMemberModal] = useState(false);
+  const [showUserModal, setShowUserModal] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
   const [selectedAward, setSelectedAward] = useState<any>(null);
   const [selectedMember, setSelectedMember] = useState<any>(null);
+  const [selectedUser, setSelectedUser] = useState<any>(null);
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
 
@@ -57,6 +62,13 @@ const Admin = () => {
         setShowMemberModal(true);
         // Don't change tab when adding - keep current tab
         break;
+      case 'users':
+        setActiveTab('users');
+        break;
+      case 'addUser':
+        setSelectedUser(null);
+        setShowUserModal(true);
+        break;
       default: 
         setActiveTab('dashboard');
     }
@@ -66,6 +78,7 @@ const Admin = () => {
   const handleEditEvent = (event: any) => { setSelectedEvent(event); setShowEventModal(true); };
   const handleEditAward = (award: any) => { setSelectedAward(award); setShowAwardModal(true); };
   const handleEditMember = (member: any) => { setSelectedMember(member); setShowMemberModal(true); };
+  const handleEditUser = (user: any) => { setSelectedUser(user); setShowUserModal(true); };
 
   // TASK 17: Log admin activity to Firestore (non-blocking)
   const logActivity = async (action: string, contentType: string, contentId: string, contentName: string) => {
@@ -226,6 +239,31 @@ const Admin = () => {
         </div>
       )}
 
+      {activeTab === 'sigs' && (
+        <div className="space-y-6">
+          <div className="flex justify-between items-center">
+            <h2 className="text-2xl font-bold">SIGs Management</h2>
+          </div>
+          <SIGPreviewList />
+        </div>
+      )}
+
+      {activeTab === 'users' && (
+        <div className="space-y-6">
+          <div className="flex justify-between items-center">
+            <h2 className="text-2xl font-bold">User Access Management</h2>
+            <Button onClick={() => { setSelectedUser(null); setShowUserModal(true); }}>
+              Add New User
+            </Button>
+          </div>
+          <UserManagement
+            onEdit={handleEditUser}
+            setSuccess={setSuccessMessage}
+            setError={setErrorMessage}
+          />
+        </div>
+      )}
+
       {/* Modals */}
       {showEventModal && (
         <EventModal
@@ -256,6 +294,17 @@ const Admin = () => {
           setError={setErrorMessage}
         />
       )}
+
+      {showUserModal && (
+        <UserModal
+          isOpen={showUserModal}
+          onClose={() => { setShowUserModal(false); setSelectedUser(null); }}
+          user={selectedUser}
+          setSuccess={setSuccessMessage}
+          setError={setErrorMessage}
+        />
+      )}
+
     </AdminLayout>
   );
 };
