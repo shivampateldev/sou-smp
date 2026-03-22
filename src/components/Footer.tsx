@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SiX, SiThreads } from "react-icons/si";
+import { useTheme } from "@/lib/theme-provider";
+import { LOGOS } from "@/lib/logos";
 
 /* ---------- data ---------- */
 const QUICK_LINKS = [
@@ -40,6 +42,7 @@ const SOCIAL_LINKS = [
 /* ---------- component ---------- */
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { theme } = useTheme();
 
   const renderSocial = (name: string) => {
     const social = SOCIAL_LINKS.find((s) => s.platform === name);
@@ -70,11 +73,26 @@ export default function Footer() {
         {/* ── Top Row (Logo) ── */}
         <div className="flex justify-center flex-col items-center py-4 border-b border-gray-200 dark:border-white/5">
           <Link to="/" className="inline-block group w-full flex justify-center">
-            <img
-              src="http://ieee.socet.edu.in/wp-content/uploads/2025/09/N_Wedge-removebg-preview.png"
-              alt="IEEE SOU SB Logo"
-              className="w-full h-auto max-h-12 md:max-h-16 object-contain object-center opacity-80 transition-all duration-300 group-hover:opacity-100 dark:brightness-0 dark:invert"
-            />
+            {theme === "dark" ? (
+              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 md:gap-6 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                <img
+                  src="http://ieee.socet.edu.in/wp-content/uploads/2026/03/N-SOU-X-NAAC-Logo-NW-SOU-X-NAAC-Logo.png"
+                  alt="Silver Oak Logo"
+                  className="h-10 sm:h-12 md:h-16 w-auto object-contain shrink-0"
+                />
+                <img
+                  src="http://ieee.socet.edu.in/wp-content/uploads/2026/03/IEEE-New-Logo-White-scaled.png"
+                  alt="IEEE Logo"
+                  className="h-10 sm:h-12 md:h-16 w-auto object-contain shrink-0"
+                />
+              </div>
+            ) : (
+              <img
+                src={LOGOS.LIGHT.IEEESOUSSB}
+                alt="IEEE SOU SB Logo"
+                className="w-full h-auto max-h-12 md:max-h-16 object-contain object-center opacity-80 transition-all duration-300 group-hover:opacity-100 mix-blend-multiply flex-shrink-0"
+              />
+            )}
           </Link>
         </div>
 

@@ -47,23 +47,5 @@ export const sigItems: SIGItem[] = [
     title: "Paperback Pals",
     imageUrl: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&q=80&w=800",
     details: "Bringing together book lovers and curious minds in a vibrant, idea-driven space."
-  },
-  {
-    id: "sps",
-    title: "Signal Processing Society",
-    imageUrl: "http://ieee.socet.edu.in/wp-content/uploads/2025/12/IEEE-SPS-SOU-SBC-Full-Color.png",
-    details: "Advancing and disseminating state-of-the-art scientific information in signal processing while providing a venue for people to interact and exchange ideas."
-  },
-  {
-    id: "cs",
-    title: "Computer Society",
-    imageUrl: "http://ieee.socet.edu.in/wp-content/uploads/2025/12/IEEE-Computer-Society-SBC.png",
-    details: "Promoting education, research, and practical applications in computer science and technology to bridge the gap between academia and industry."
-  },
-  {
-    id: "sight",
-    title: "Special Interest Group on Humanitarian Technology",
-    imageUrl: "http://ieee.socet.edu.in/wp-content/uploads/2026/03/IEEE-SIGHT-SOU-SB-NEW.png",
-    details: "Leveraging technology for humanitarian causes and creating lasting, impactful change in underserved communities through engineering innovations."
   }
 ];
