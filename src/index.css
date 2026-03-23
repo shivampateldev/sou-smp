@@ -9,6 +9,19 @@
     --background: 210 40% 98%;
     --foreground: 222 47% 11%;
 
+    /* ── Fluid Responsive Tokens ── */
+    --navbar-height: clamp(56px, 8vw, 80px);
+    --navbar-height-scrolled: 60px;
+    --section-padding-x: clamp(16px, 4vw, 48px);
+    --section-padding-y: clamp(40px, 6vw, 96px);
+    --logo-height: clamp(32px, 5vw, 60px);
+    --logo-height-sm: clamp(24px, 3.5vw, 44px);
+    --gap-fluid: clamp(8px, 2vw, 24px);
+    --font-h1: clamp(24px, 5vw, 48px);
+    --font-h2: clamp(20px, 3.5vw, 36px);
+    --font-p: clamp(14px, 1.5vw, 18px);
+    --btn-padding: clamp(8px, 1.5vw, 16px) clamp(16px, 3vw, 32px);
+
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
 
@@ -84,6 +97,13 @@
     padding: 0;
   }
 
+  /* Fluid global image rules */
+  img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
   h1,
   h2,
   h3,
@@ -104,11 +124,27 @@
   }
 
   .section-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24;
+    @apply max-w-7xl mx-auto;
+    padding: var(--section-padding-y) var(--section-padding-x);
   }
 
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* Fluid logo utility */
+  .fluid-logo {
+    height: var(--logo-height);
+    width: auto;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .fluid-logo-sm {
+    height: var(--logo-height-sm);
+    width: auto;
+    object-fit: contain;
+    flex-shrink: 0;
   }
 
   .animate-on-scroll {
@@ -170,10 +206,33 @@
   position: relative;
 }
 
-/* Prevent images from causing overflow */
-img {
-  max-width: 100%;
-  height: auto;
+/* ── Reduce animations on tiny / low-power screens ── */
+@media (max-width: 480px) {
+  .reveal,
+  [class*="reveal"] {
+    animation: none !important;
+    transition: opacity 0.2s ease !important;
+    transform: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+  }
+
+  .heading-line {
+    animation: none !important;
+    width: 100% !important;
+    opacity: 1 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* =============================================

@@ -65,7 +65,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative w-full mt-4 overflow-hidden bg-gray-50 dark:bg-[#030712] border-t border-gray-200 dark:border-white/5 select-none transition-colors duration-300">
+    <footer className="relative w-full mt-4 overflow-hidden bg-white dark:bg-[#030712] border-t border-gray-200 dark:border-white/5 select-none transition-colors duration-300">
       {/* Top accent line */}
       <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-blue-500/60 to-transparent" />
 
@@ -74,23 +74,23 @@ export default function Footer() {
         <div className="flex justify-center flex-col items-center py-4 border-b border-gray-200 dark:border-white/5">
           <Link to="/" className="inline-block group w-full flex justify-center">
             {theme === "dark" ? (
-              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 md:gap-6 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="flex flex-nowrap items-center justify-center gap-2 sm:gap-4 md:gap-6 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
                 <img
                   src="http://ieee.socet.edu.in/wp-content/uploads/2026/03/N-SOU-X-NAAC-Logo-NW-SOU-X-NAAC-Logo.png"
                   alt="Silver Oak Logo"
-                  className="h-10 sm:h-12 md:h-16 w-auto object-contain shrink-0"
+                  className="h-6 sm:h-8 md:h-12 lg:h-16 w-auto object-contain shrink-0"
                 />
                 <img
                   src="http://ieee.socet.edu.in/wp-content/uploads/2026/03/IEEE-New-Logo-White-scaled.png"
                   alt="IEEE Logo"
-                  className="h-10 sm:h-12 md:h-16 w-auto object-contain shrink-0"
+                  className="h-6 sm:h-8 md:h-12 lg:h-16 w-auto object-contain shrink-0"
                 />
               </div>
             ) : (
               <img
                 src={LOGOS.LIGHT.IEEESOUSSB}
                 alt="IEEE SOU SB Logo"
-                className="w-full h-auto max-h-12 md:max-h-16 object-contain object-center opacity-80 transition-all duration-300 group-hover:opacity-100 mix-blend-multiply flex-shrink-0"
+                className="w-full h-auto max-h-12 md:max-h-20 lg:max-h-24 object-contain object-center transition-all duration-300 hover:scale-105 flex-shrink-0"
               />
             )}
           </Link>

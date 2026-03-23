@@ -139,7 +139,7 @@ export default function Navbar() {
                       <img
                         src={LOGOS.LIGHT.IEEESOUSSB}
                         alt="Silver Oak University IEEE Student Branch"
-                        className="h-12 sm:h-14 lg:h-[55px] w-auto object-contain mix-blend-multiply"
+                        className="h-12 sm:h-14 lg:h-[55px] w-auto object-contain transition-all duration-300 hover:scale-105"
                       />
                     )}
                   </div>
@@ -152,41 +152,41 @@ export default function Navbar() {
         {/* BOTTOM TIER: Navigation (Standard and Minimal when Scrolled) */}
         <div className="max-w-[1440px] mx-auto relative px-4">
           <div className={cn(
-            "flex items-center transition-all duration-500",
+            "flex items-center justify-between transition-all duration-500",
             isScrolled ? "h-[60px]" : "h-[70px] lg:h-[80px]"
           )}>
-            
+
             {/* Left: Logo (Visible when scrolled or on mobile) */}
             <div className={cn(
-              "flex-shrink-0 transition-all duration-300 overflow-hidden",
+              "flex-shrink transition-all duration-300 overflow-visible min-w-0 mr-auto lg:mr-0",
               // Unified width scaling allowing absolute maximum height based expansion
-              isScrolled ? "w-max" : "w-max lg:w-0"
+              isScrolled ? "w-auto" : "w-auto lg:w-0"
             )}>
-              <Link to="/" className="flex items-center group w-max">
+              <Link to="/" className="flex items-center group w-auto">
                 {theme === "dark" ? (
                   <div className={cn(
-                    "flex items-center gap-2 transition-all duration-300 group-hover:scale-105",
-                    isScrolled ? "h-6 md:h-8 w-max" : "h-10 sm:h-12 md:h-14 w-max"
+                    "flex items-center gap-1 sm:gap-2 transition-all duration-300 group-hover:scale-105",
+                    isScrolled ? "h-5 sm:h-7 md:h-8 max-w-full" : "h-[22px] sm:h-8 md:h-14 max-w-full"
                   )}>
                     <img
                       src="http://ieee.socet.edu.in/wp-content/uploads/2026/03/N-SOU-X-NAAC-Logo-NW-SOU-X-NAAC-Logo.png"
                       alt="Silver Oak Logo"
-                      className="h-full w-auto object-contain shrink-0"
+                      className="h-full w-auto object-contain flex-shrink min-w-0"
                     />
                     <img
                       src="http://ieee.socet.edu.in/wp-content/uploads/2026/03/IEEE-New-Logo-White-scaled.png"
                       alt="IEEE Logo"
-                      className="h-full w-auto object-contain shrink-0"
+                      className="h-full w-auto object-contain flex-shrink min-w-0"
                     />
                   </div>
                 ) : (
                   <img
                     src={LOGOS.LIGHT.IEEESOUSSB}
                     className={cn(
-                      "transition-all duration-300 group-hover:scale-105 w-auto mix-blend-multiply",
-                      isScrolled 
-                        ? "h-11 md:h-[48px] max-w-[180px] md:max-w-[240px] xl:max-w-[280px] object-contain" 
-                        : "h-14 md:h-[55px] max-w-[220px] md:max-w-[280px] xl:max-w-[320px] object-contain"
+                      "transition-all duration-300 flex-shrink object-contain min-w-0 hover:scale-105",
+                      isScrolled
+                        ? "h-9 sm:h-11 md:h-[40px] lg:h-[48px] w-auto max-w-[calc(100vw-110px)] md:max-w-[280px] xl:max-w-[320px]"
+                        : "h-10 sm:h-12 md:h-[48px] lg:h-[55px] w-auto max-w-[calc(100vw-110px)] md:max-w-[320px] xl:max-w-[360px]"
                     )}
                     alt="IEEE SOU SB"
                   />
@@ -256,8 +256,8 @@ export default function Navbar() {
                       to={item.href || "/"}
                       className={cn(
                         "relative px-3 xl:px-4 py-2 text-xs xl:text-sm font-semibold transition-all duration-300 hover:text-primary whitespace-nowrap",
-                        isActive(item.href || "") 
-                          ? "text-primary dark:text-white" 
+                        isActive(item.href || "")
+                          ? "text-primary dark:text-white"
                           : "text-foreground dark:text-gray-300"
                       )}
                     >
@@ -404,7 +404,7 @@ export default function Navbar() {
                     )}
                   </div>
                 ))}
-                
+
                 <div className="pt-8 px-4">
                   <Button asChild className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-6 text-lg font-bold shadow-lg shadow-blue-500/20">
                     <Link to="/join" onClick={() => setIsMobileMenuOpen(false)}>Join IEEE</Link>

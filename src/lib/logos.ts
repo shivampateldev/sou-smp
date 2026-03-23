@@ -5,7 +5,7 @@
 
 export const LOGOS = {
   LIGHT: {
-    IEEESOUSSB: "http://ieee.socet.edu.in/wp-content/uploads/2025/12/header.png",
+    IEEESOUSSB: "http://ieee.socet.edu.in/wp-content/uploads/2026/03/header-removebg-preview.png",
     SIGHT: "http://ieee.socet.edu.in/wp-content/uploads/2026/03/IEEE-SIGHT-SOU-SB-NEW.png",
     CS: "http://ieee.socet.edu.in/wp-content/uploads/2025/12/IEEE-Computer-Society-SBC.png",
     IEEE_GLOBAL: "http://ieee.socet.edu.in/wp-content/uploads/2025/12/ieee_logo_blue-1.png",

@@ -4,6 +4,8 @@ import { db } from "../../firebase";
 import { Search, BookOpen, User, Calendar } from "lucide-react";
 import PageLayout from "@/components/PageLayout";
 import { Input } from "@/components/ui/input";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 interface Blog {
   id: string;
@@ -125,13 +127,13 @@ export default function BlogList() {
                     </h3>
                     
                     <p className="text-muted-foreground text-sm mb-6 line-clamp-3 leading-relaxed">
-                      {blog.content.substring(0, 180)}...
+                      {(blog.content || "").substring(0, 180)}...
                     </p>
                     
                     <div className="mt-auto pt-4 border-t border-border/40 flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#00629B] to-[#00a3ff] flex items-center justify-center text-white text-xs font-bold">
-                          {blog.author_name.charAt(0)}
+                          {(blog.author_name || "U").charAt(0)}
                         </div>
                         <span className="text-sm font-medium">{blog.author_name}</span>
                       </div>
