@@ -16,7 +16,8 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { ThemeProvider } from "@/lib/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
+import { signOut } from "firebase/auth";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 
 interface AdminLayoutProps {
@@ -44,8 +45,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, activeTab, onTabCha
 
   const handleLogout = async () => {
     try {
-      localStorage.removeItem("adminSession");
-      window.location.href = "/login";
+      await signOut(auth);
     } catch (error) {
       console.error("Error signing out:", error);
     }

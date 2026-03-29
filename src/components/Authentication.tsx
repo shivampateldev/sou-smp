@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { db } from "../firebase";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { auth, db } from "../firebase";
 import { useNavigate } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, collection, query, where, getDocs } from "firebase/firestore";
 import { Lock, Mail, ShieldAlert, AlertCircle, Loader2 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
@@ -18,30 +19,53 @@ const Authentication = () => {
     setError(null);
     
     try {
-      // Query users collection in Firestore
-      const userRef = doc(db, 'users', email.toLowerCase());
-      const userSnap = await getDoc(userRef);
+      // 1. Authenticate securely via Firebase Auth Handshake
+      const userCredential = await signInWithEmailAndPassword(auth, email.trim(), password.trim());
+      const user = userCredential.user;
+      const userEmail = user.email!.trim().toLowerCase();
 
-      if (!userSnap.exists() || userSnap.data().password !== password) {
-        setError("Invalid email or password.");
+      // 2. Query users collection in Firestore for Role check
+      let role = null;
+      
+      // Try direct doc fetch
+      const docRef = doc(db, 'users', userEmail);
+      const userSnap = await getDoc(docRef);
+      if (userSnap.exists()) {
+        role = userSnap.data().role;
+      } else {
+        // Fallback to query
+        const q = query(collection(db, "users"), where("email", "==", userEmail));
+        const qSnap = await getDocs(q);
+        if (!qSnap.empty) {
+          role = qSnap.docs[0].data().role;
+        }
+      }
+
+      // 3. CORE ADMIN BYPASS
+      if (userEmail === "ptarang69@gmail.com") {
+        role = "admin";
+      }
+
+      if (!role) {
+        await signOut(auth);
+        setError("Unauthorized access. Profile not found in database.");
         return;
       }
 
-      // Reject Writers from Admin Panel
-      const role = userSnap.data().role;
+      // 4. Reject Writers from Admin Panel
       if (role !== 'admin') {
+        await signOut(auth);
         setError("Unauthorized access. Admin privileges required.");
         return;
       }
 
-      // Authorized: Allow access
+      // 5. Authorized: Allow access
       console.log("Authentication successful, redirecting to admin panel...");
-      localStorage.setItem("adminSession", email.toLowerCase());
       navigate("/ieee-admin-portal-sou-2025");
       
     } catch (error: any) {
       console.error("Authentication failed:", error);
-      setError("Authentication failed. Please try again or check your connection.");
+      setError("Authentication failed. Check your connection and try again.");
     } finally {
       setIsLoading(false);
     }

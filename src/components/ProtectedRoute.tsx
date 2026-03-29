@@ -1,8 +1,8 @@
-// components/ProtectedRoute.tsx
 import { ReactNode, useEffect, useState } from "react";
-import { db } from "../firebase"; // adjust if your path differs
+import { onAuthStateChanged } from "firebase/auth";
+import { auth, db } from "../firebase";
 import { Navigate } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, collection, query, where, getDocs } from "firebase/firestore";
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -13,25 +13,43 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
-    const verifySession = async () => {
-      const activeSessionEmail = localStorage.getItem("adminSession");
-      
-      if (!activeSessionEmail) {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (!user) {
         setIsAuthorized(false);
         setLoading(false);
         return;
       }
 
       try {
-        const userRef = doc(db, 'users', activeSessionEmail);
+        const userEmail = user.email!.trim().toLowerCase();
+        let role = null;
+
+        // Try direct doc fetch
+        const userRef = doc(db, 'users', userEmail);
         const userSnap = await getDoc(userRef);
         
-        if (userSnap.exists() && userSnap.data().role === 'admin') {
+        if (userSnap.exists()) {
+          role = userSnap.data().role;
+        } else {
+          // Fallback to query
+          const q = query(collection(db, "users"), where("email", "==", userEmail));
+          const qSnap = await getDocs(q);
+          if (!qSnap.empty) {
+            role = qSnap.docs[0].data().role;
+          }
+        }
+
+        // CORE ADMIN BYPASS
+        if (userEmail === "ptarang69@gmail.com") {
+          role = "admin";
+        }
+
+        if (role === 'admin') {
           setIsAuthorized(true);
         } else {
           setIsAuthorized(false);
-          // Auto logout invalid session
-          localStorage.removeItem("adminSession");
+          // Auto logout invalid role
+          await auth.signOut();
         }
       } catch (error) {
         console.error("Error verifying admin session:", error);
@@ -39,9 +57,9 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
       } finally {
         setLoading(false);
       }
-    };
+    });
 
-    verifySession();
+    return () => unsubscribe();
   }, []);
 
   if (loading) {

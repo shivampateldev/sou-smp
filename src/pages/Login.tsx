@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { db } from "../firebase";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { auth, db } from "../firebase";
 import { useNavigate } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, collection, query, where, getDocs } from "firebase/firestore";
 import { Lock, Mail, ShieldAlert, AlertCircle, Loader2 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
@@ -20,23 +21,52 @@ const Login = () => {
     setError(null);
     
     try {
-      // 1. Query users collection in Firestore
-      const userRef = doc(db, 'users', email.toLowerCase());
-      const userSnap = await getDoc(userRef);
+      // 1. Authenticate securely via Firebase Auth Handshake
+      const userCredential = await signInWithEmailAndPassword(auth, email.trim(), password.trim());
+      const user = userCredential.user;
+      const userEmail = user.email!.trim().toLowerCase();
 
-      if (!userSnap.exists() || userSnap.data().password !== password) {
-        setError("Invalid email or password.");
+      // 2. Query users collection in Firestore for Role check
+      let role = null;
+      let name = "Admin";
+      
+      // Try direct doc fetch first
+      const docRef = doc(db, 'users', userEmail);
+      const userSnap = await getDoc(docRef);
+
+      if (userSnap.exists()) {
+        role = userSnap.data().role;
+        name = userSnap.data().name || "Admin";
+      } else {
+        // Try query by email field as fallback
+        const q = query(collection(db, "users"), where("email", "==", userEmail));
+        const qSnap = await getDocs(q);
+        if (!qSnap.empty) {
+          const data = qSnap.docs[0].data();
+          role = data.role;
+          name = data.name || "Admin";
+        }
+      }
+
+      // 3. CORE ADMIN BYPASS (Emergency resolution for ptarang69@gmail.com)
+      if (userEmail === "ptarang69@gmail.com") {
+        role = "admin";
+      }
+
+      if (!role) {
+        await signOut(auth);
+        setError("Unauthorized access. Profile not found in database.");
         toast({
           title: "Access Denied",
-          description: "Incorrect credentials. Make sure you are registered.",
+          description: "Unauthorized access: You are not registered in our database.",
           variant: "destructive",
         });
         return;
       }
 
-      // 2. Reject Writers from Admin Panel
-      const role = userSnap.data().role;
+      // 4. Reject Writers from Admin Panel
       if (role !== 'admin') {
+        await signOut(auth);
         setError("Unauthorized access. Admin privileges required.");
         toast({
           title: "Access Denied",
@@ -46,19 +76,35 @@ const Login = () => {
         return;
       }
 
-      // 3. Authorized: Allow access
-      console.log("Authentication successful, saving session...");
+      // 5. Authorized: Allow access
+      console.log("Authentication successful, redirecting...");
       toast({
         title: "Login Successful",
-        description: `Welcome back, ${userSnap.data().name || 'Admin'}!`,
+        description: `Welcome back, ${name}!`,
       });
       
-      localStorage.setItem("adminSession", email.toLowerCase());
       navigate("/ieee-admin-portal-sou-2025");
       
     } catch (error: any) {
       console.error("Authentication failed:", error);
-      setError("Authentication failed. Please try again or check your connection.");
+      
+      // Handle different Firebase auth errors
+      switch (error.code) {
+        case 'auth/invalid-email':
+          setError("Invalid email format.");
+          break;
+        case 'auth/user-disabled':
+          setError("This account has been disabled.");
+          break;
+        case 'auth/user-not-found':
+          setError("No account found with this email.");
+          break;
+        case 'auth/wrong-password':
+          setError("Incorrect password.");
+          break;
+        default:
+          setError("Authentication failed. Check your connection and try again.");
+      }
     } finally {
       setIsLoading(false);
     }
