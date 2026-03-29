@@ -16,8 +16,7 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { ThemeProvider } from "@/lib/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { auth, db } from "../firebase";
-import { signOut } from "firebase/auth";
+import { db } from "../firebase";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 
 interface AdminLayoutProps {
@@ -45,8 +44,8 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, activeTab, onTabCha
 
   const handleLogout = async () => {
     try {
-      await signOut(auth);
-      // Redirect happens via the AuthProvider/ProtectedRoute
+      localStorage.removeItem("adminSession");
+      window.location.href = "/login";
     } catch (error) {
       console.error("Error signing out:", error);
     }

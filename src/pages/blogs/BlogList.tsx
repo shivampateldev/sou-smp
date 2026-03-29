@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { collection, getDocs, query, orderBy, where, limit } from "firebase/firestore";
 import { db } from "../../firebase";
-import { Search, BookOpen, Calendar, Github, Youtube, Image as ImageIcon } from "lucide-react";
+import { Search, BookOpen, Calendar, Github, Youtube, Image as ImageIcon, PenSquare } from "lucide-react";
 import PageLayout from "@/components/PageLayout";
 import { Input } from "@/components/ui/input";
 import { Link, useParams } from "react-router-dom";
@@ -162,8 +162,13 @@ export default function BlogList() {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <div className="flex items-center gap-4">
-              <div className="text-sm text-muted-foreground">
+            <div className="flex flex-col md:flex-row items-center gap-4">
+              <Link to="/write-blog">
+                <Button className="bg-[#00629B] hover:bg-[#004f7c] text-white shadow-md">
+                  <PenSquare className="w-4 h-4 mr-2" /> Write a Blog
+                </Button>
+              </Link>
+              <div className="text-sm text-muted-foreground hidden md:block border-l border-border pl-4">
                 Showing <span className="font-semibold">{filteredBlogs.length}</span> {categoryLabel.toLowerCase()}
               </div>
             </div>

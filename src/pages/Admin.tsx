@@ -14,7 +14,7 @@ import Dashboard from "../Admin/Dashboard";
 import AdminLayout from "../Admin/AdminLayout";
 import UserManagement from "../Admin/UserManagement";
 import UserModal from "../Admin/UserModal";
-import { db, auth } from "../firebase";
+import { db } from "../firebase";
 import { doc, deleteDoc, collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -88,13 +88,13 @@ const Admin = () => {
   // TASK 17: Log admin activity to Firestore (non-blocking)
   const logActivity = async (action: string, contentType: string, contentId: string, contentName: string) => {
     try {
-      const user = auth.currentUser;
+      const adminEmail = localStorage.getItem("adminSession") || "unknown";
       await addDoc(collection(db, "adminActivityLogs"), {
         action,
         contentType,
         contentId,
         contentName,
-        adminEmail: user?.email || "unknown",
+        adminEmail,
         timestamp: serverTimestamp(),
       });
     } catch (_) {}

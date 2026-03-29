@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { auth, db } from "../firebase";
+import { useState } from "react";
+import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { Lock, Mail, ShieldAlert, AlertCircle, Loader2 } from "lucide-react";
@@ -21,62 +20,45 @@ const Login = () => {
     setError(null);
     
     try {
-      // 1. Attempt Firebase authentication
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      // 2. Query users collection in Firestore
-      // "Each user in DB has: name, email, enrollment_number, role"
-      const userRef = doc(db, 'users', user.email!);
+      // 1. Query users collection in Firestore
+      const userRef = doc(db, 'users', email.toLowerCase());
       const userSnap = await getDoc(userRef);
 
-      if (!userSnap.exists()) {
-        // 3. If email NOT found in DB: Immediately logout user
-        await signOut(auth);
-        setError("Unauthorized access");
+      if (!userSnap.exists() || userSnap.data().password !== password) {
+        setError("Invalid email or password.");
         toast({
           title: "Access Denied",
-          description: "Unauthorized access: You are not registered in our database.",
+          description: "Incorrect credentials. Make sure you are registered.",
           variant: "destructive",
         });
         return;
       }
 
-      // 4. Found: Allow access
-      console.log("Authentication successful, redirecting...");
+      // 2. Reject Writers from Admin Panel
+      const role = userSnap.data().role;
+      if (role !== 'admin') {
+        setError("Unauthorized access. Admin privileges required.");
+        toast({
+          title: "Access Denied",
+          description: "Writers cannot access the Admin panel. Use 'Write a Blog' button on the frontend instead.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // 3. Authorized: Allow access
+      console.log("Authentication successful, saving session...");
       toast({
         title: "Login Successful",
-        description: `Welcome back, ${userSnap.data().name || 'User'}!`,
+        description: `Welcome back, ${userSnap.data().name || 'Admin'}!`,
       });
       
-      // Navigate to blogs or admin based on role
-      const role = userSnap.data().role;
-      if (role === 'admin') {
-        navigate("/ieee-admin-portal-sou-2025");
-      } else {
-        navigate("/blogs");
-      }
+      localStorage.setItem("adminSession", email.toLowerCase());
+      navigate("/ieee-admin-portal-sou-2025");
       
     } catch (error: any) {
       console.error("Authentication failed:", error);
-      
-      // Handle different Firebase auth errors
-      switch (error.code) {
-        case 'auth/invalid-email':
-          setError("Invalid email format.");
-          break;
-        case 'auth/user-disabled':
-          setError("This account has been disabled.");
-          break;
-        case 'auth/user-not-found':
-          setError("No account found with this email.");
-          break;
-        case 'auth/wrong-password':
-          setError("Incorrect password.");
-          break;
-        default:
-          setError("Authentication failed. Please try again.");
-      }
+      setError("Authentication failed. Please try again or check your connection.");
     } finally {
       setIsLoading(false);
     }
