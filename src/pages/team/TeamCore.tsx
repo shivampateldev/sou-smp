@@ -206,9 +206,11 @@ export default function TeamCore() {
                             </a>
                           )}
                         </div>
-                        <p className="text-xs text-muted-foreground dark:text-gray-400 mt-2">
-                          {member.education || member.department}
-                        </p>
+                        {(member.education || member.department) && (
+                          <p className="text-xs text-muted-foreground dark:text-gray-400 mt-2">
+                            {member.education || member.department}
+                          </p>
+                        )}
                       </div>
                     ))}
                   </div>

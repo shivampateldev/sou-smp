@@ -190,7 +190,7 @@ const MemberModal: React.FC<MemberModalProps> = ({ isOpen, onClose, member, setS
             )}
 
             {memberType !== "faculty" && (
-              <Input label="Education" value={memberEducation} onChange={setMemberEducation} placeholder="Ph.D. in Computer Science" required />
+              <Input label="Education (optional)" value={memberEducation} onChange={setMemberEducation} placeholder="Ph.D. in Computer Science" />
             )}
 
             <div className="flex justify-end space-x-3 mt-6">
