@@ -103,3 +103,10 @@ export async function deleteDoc(collectionName: string, id: string) {
   if (!response.ok) throw new Error(`Failed to delete document: ${id}`);
   return response.json();
 }
+
+/**
+ * Submits a new blog post for admin review.
+ */
+export async function submitBlog(blogData: any) {
+  return createDoc("blogs", blogData);
+}
