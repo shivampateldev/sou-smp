@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
+import { collection, getDocs, query, where, orderBy } from "@/lib/firestore-client";
 import { db } from "../firebase";
 import { Search, Award, ExternalLink } from "lucide-react";
 import PageLayout from "@/components/PageLayout";
@@ -197,3 +197,4 @@ export default function Newsletter() {
     </PageLayout>
   );
 }
+

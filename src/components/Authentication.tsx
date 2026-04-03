@@ -65,7 +65,30 @@ const Authentication = () => {
       
     } catch (error: any) {
       console.error("Authentication failed:", error);
-      setError("Authentication failed. Check your connection and try again.");
+      
+      // Handle different Firebase auth errors
+      switch (error.code) {
+        case 'auth/invalid-email':
+          setError("Invalid email format.");
+          break;
+        case 'auth/user-disabled':
+          setError("This account has been disabled.");
+          break;
+        case 'auth/user-not-found':
+          setError("No account found with this email.");
+          break;
+        case 'auth/wrong-password':
+          setError("Incorrect password.");
+          break;
+        case 'auth/invalid-credential':
+          setError("Invalid credentials. Please check your email and password.");
+          break;
+        case 'auth/too-many-requests':
+          setError("Too many failed login attempts. Please try again later.");
+          break;
+        default:
+          setError("Authentication failed. " + (error.message || "Please check your connection and try again."));
+      }
     } finally {
       setIsLoading(false);
     }

@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../firebase";
 import { Skeleton } from "@/components/ui/skeleton";
+import ImageLoader from "@/components/ImageLoader";
 
 export interface SIGItem {
   id: string;
@@ -139,12 +140,11 @@ export default function SIGs() {
 
           {/* Image Canvas (Left) */}
           <div className="relative z-10 w-full md:w-[55%] h-1/2 md:h-full flex items-center justify-center p-6 md:p-10 border-b md:border-b-0 md:border-r border-border/30 bg-black/[0.02] dark:bg-white/[0.02]">
-            <img
-              loading="lazy"
+            <ImageLoader
               src={item.imageUrl}
               alt={item.title}
+              containerClassName="w-full h-full flex items-center justify-center"
               className="w-full h-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.2)] transition-transform duration-700 group-hover:scale-105"
-              onError={handleImageError}
             />
           </div>
 

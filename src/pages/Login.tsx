@@ -102,8 +102,14 @@ const Login = () => {
         case 'auth/wrong-password':
           setError("Incorrect password.");
           break;
+        case 'auth/invalid-credential':
+          setError("Invalid credentials. Please check your email and password.");
+          break;
+        case 'auth/too-many-requests':
+          setError("Too many failed login attempts. Please try again later.");
+          break;
         default:
-          setError("Authentication failed. Check your connection and try again.");
+          setError("Authentication failed. " + (error.message || "Please check your connection and try again."));
       }
     } finally {
       setIsLoading(false);

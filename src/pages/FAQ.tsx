@@ -1,6 +1,6 @@
 import PageLayout from "@/components/PageLayout";
 import { ChevronRight } from "lucide-react";
-import { TypingAnimation } from "@/components/TypingAnimation";
+
 
 export const metadata = {
     title: "FAQ - IEEE SOU SB",
@@ -86,7 +86,7 @@ export default function FAQ() {
                         </h1>
 
                         <p className="text-slate-500 dark:text-slate-400 text-base max-w-2xl">
-                            <TypingAnimation text="Find answers to common questions about IEEE, membership, benefits, and our student branch activities." />
+                            Find answers to common questions about IEEE, membership, benefits, and our student branch activities.
                         </p>
 
                         {/* Quick nav */}
@@ -131,7 +131,7 @@ export default function FAQ() {
                             {/* FAQ Answer */}
                             <div className="px-6 py-6">
                                 <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                                    <TypingAnimation text={faq.answer} />
+                                    {faq.answer}
                                 </p>
                             </div>
                         </section>

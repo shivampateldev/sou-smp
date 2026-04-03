@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { collection, addDoc, serverTimestamp, doc, getDoc } from "firebase/firestore";
-import { db } from "../../firebase";
+import { signInWithEmailAndPassword } from "@/lib/auth-client";
+import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { BLOG_CATEGORIES, BlogCategory } from "@/types/blog";
 import MultiImageInput from "@/Admin/MultiImageInput";
 import DynamicLinkInput from "@/Admin/DynamicLinkInput";
+import { submitBlog } from "@/lib/api";
 
 const validateGithub = (link: string) => {
   const urlPattern = /^https?:\/\/(www\.)?github\.com\//i;
@@ -50,22 +51,19 @@ export default function WriteBlog() {
     setIsVerifying(true);
     setVerifyError(null);
     try {
-      const userRef = doc(db, "users", verifyEmail.toLowerCase());
-      const userSnap = await getDoc(userRef);
-      if (userSnap.exists()) {
-        const data = userSnap.data();
-        if (data.password === verifyPassword) {
-          setAuthorData(data);
-          setIsVerified(true);
-          toast({ title: "Verification Successful", description: `Welcome, ${data.name}! You can now write your blog.` });
-        } else {
-          setVerifyError("Incorrect password.");
-        }
-      } else {
-        setVerifyError("User not found in authorized database.");
+      const response = await signInWithEmailAndPassword(auth, verifyEmail.trim(), verifyPassword);
+      const user = response.user;
+
+      if (!user.role || !["writer", "admin"].includes(user.role)) {
+        setVerifyError("Your account does not have blog access.");
+        return;
       }
+
+      setAuthorData(user);
+      setIsVerified(true);
+      toast({ title: "Verification Successful", description: `Welcome, ${user.name || user.email}! You can now write your blog.` });
     } catch (error) {
-      setVerifyError("An error occurred during verification.");
+      setVerifyError("Invalid credentials.");
     } finally {
       setIsVerifying(false);
     }
@@ -98,12 +96,11 @@ export default function WriteBlog() {
 
     setIsSubmitting(true);
     try {
-      await addDoc(collection(db, "blogs"), {
+      await submitBlog({
         title,
         description,
-        content: description, // backward compat
+        content: description,
         category,
-        status: "pending",
         author: {
           name: authorData.name,
           image: authorData.image || "",
@@ -114,8 +111,6 @@ export default function WriteBlog() {
         image: cleanImages[0] || "",
         githubLinks: cleanGithub,
         youtubeLinks: cleanYoutube,
-        created_at: serverTimestamp(),
-        updated_at: serverTimestamp(),
       });
 
       toast({ title: "Submitted for Review!", description: "Your blog post has been submitted and is awaiting admin approval." });
@@ -270,3 +265,4 @@ export default function WriteBlog() {
     </PageLayout>
   );
 }
+

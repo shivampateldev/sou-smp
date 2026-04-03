@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { collection, addDoc, doc, updateDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "../firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { db, storage } from "../firebase";
 import MultiImageInput from "./MultiImageInput";
 
 interface AwardModalProps {
@@ -21,6 +22,45 @@ const AwardModal: React.FC<AwardModalProps> = ({ isOpen, onClose, award, setSucc
   const [awardYear, setAwardYear] = useState<string>("");
   const [studentName, setStudentName] = useState<string>("");
   const [pdfUrl, setPdfUrl] = useState<string>("");
+  const [uploadProgress, setUploadProgress] = useState<number | null>(null);
+
+  const handlePdfUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+    const file = e.target.files[0];
+    if (file.type !== "application/pdf") {
+      setError("Please select a valid PDF file");
+      return;
+    }
+
+    const storageRef = ref(storage, `newsletters/${Date.now()}_${file.name.replace(/\s+/g, "_")}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    setUploadProgress(0);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setUploadProgress(Math.round(progress));
+      },
+      (error) => {
+        console.error(error);
+        setError("Error uploading PDF: " + error.message);
+        setUploadProgress(null);
+      },
+      async () => {
+        try {
+          const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+          setPdfUrl(downloadUrl);
+          setUploadProgress(null);
+          setSuccess("PDF uploaded successfully!");
+        } catch (err) {
+          setError("Failed to get download URL");
+          setUploadProgress(null);
+        }
+      }
+    );
+  };
 
   // Initialize form with award data if editing
   useEffect(() => {
@@ -175,15 +215,38 @@ const AwardModal: React.FC<AwardModalProps> = ({ isOpen, onClose, award, setSucc
                 </div>
 
                 <div className="mb-4">
-                  <label className="block text-gray-700 font-medium mb-2">Direct PDF URL (Optional)</label>
-                  <input
-                    type="text"
-                    className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="https://example.com/newsletter.pdf"
-                    value={pdfUrl}
-                    onChange={(e) => setPdfUrl(e.target.value)}
-                  />
-                  <p className="mt-1 text-xs text-gray-500">If provided, clicking "Read More" will display this PDF directly.</p>
+                  <label className="block text-gray-700 font-medium mb-2">Newsletter PDF</label>
+                  
+                  {/* File Upload Option */}
+                  <div className="mb-3 p-4 border border-blue-200 bg-blue-50 rounded-lg flex flex-col gap-2">
+                    <span className="text-sm font-semibold text-blue-800">1. Upload PDF directly (Recommended for large files)</span>
+                    <input
+                      type="file"
+                      accept="application/pdf"
+                      onChange={handlePdfUpload}
+                      disabled={uploadProgress !== null}
+                      className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 disabled:opacity-50"
+                    />
+                    {uploadProgress !== null && (
+                      <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+                        <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: `${uploadProgress}%` }}></div>
+                        <p className="text-xs text-blue-700 mt-1">Uploading: {uploadProgress}%</p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Manual URL Option */}
+                  <div className="p-4 border border-gray-200 rounded-lg flex flex-col gap-2">
+                    <span className="text-sm font-semibold text-gray-700">2. Or paste a Direct URL (e.g. Firebase, Drive)</span>
+                    <input
+                      type="text"
+                      className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="https://firebasestorage.googleapis.com/..."
+                      value={pdfUrl}
+                      onChange={(e) => setPdfUrl(e.target.value)}
+                    />
+                    <p className="mt-1 text-xs text-gray-500">Note: Google Drive URLs will not preview inline if they are larger than 25MB.</p>
+                  </div>
                 </div>
               </>
             )}

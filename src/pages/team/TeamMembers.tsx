@@ -6,6 +6,7 @@ import { TypingAnimation } from "@/components/TypingAnimation";
 import { db } from "@/firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { Skeleton } from "@/components/ui/skeleton";
+import ImageLoader from "@/components/ImageLoader";
 
 const ITEMS_PER_PAGE = 20;
 
@@ -100,15 +101,11 @@ export default function TeamMembers() {
                                dark:hover:shadow-[0_0_10px_rgba(255,255,255,0.7)] hover:scale-[1.02]
                                transition-all duration-300 p-6 flex flex-col items-center text-center h-full cursor-pointer"
                   >
-                    <img loading="lazy"
+                    <ImageLoader 
                       src={member.image}
                       alt={member.name}
-                      className="w-32 h-32 rounded-lg object-cover mb-4 border-2 border-muted dark:border-gray-700"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.onerror = null;
-                        target.src = "https://via.placeholder.com/300x300?text=No+Image";
-                      }}
+                      containerClassName="w-32 h-32 mb-4"
+                      className="w-full h-full rounded-lg object-cover border-2 border-muted dark:border-gray-700"
                     />
                     <div className="flex items-center justify-center mb-2">
                       <h3 className="font-semibold text-xl text-gray-900 dark:text-white">

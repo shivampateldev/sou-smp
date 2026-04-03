@@ -20,10 +20,26 @@ export default defineConfig({
     },
   },
   build: {
+    sourcemap: false,
+    minify: "terser",
+    target: "es2020",
+    cssMinify: true,
+    reportCompressedSize: false,
     rollupOptions: {
       output: {
         manualChunks: undefined,
       },
     },
   },
+  esbuild: {
+    logOverride: { "this-is-undefined-in-esm": "silent" },
+    drop: ["console", "debugger"],
+    legalComments: "none",
+    minifyIdentifiers: true,
+    minifySyntax: true,
+    minifyWhitespace: true,
+    sourcemap: false,
+  },
 });
+
+

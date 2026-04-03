@@ -6,6 +6,7 @@ import { TypingAnimation } from "@/components/TypingAnimation";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/firebase";
 import { Skeleton } from "@/components/ui/skeleton";
+import ImageLoader from "@/components/ImageLoader";
 
 interface Member {
   id: string;
@@ -127,15 +128,11 @@ export default function TeamFaculty() {
                                transition-all duration-300 overflow-hidden p-8 
                                max-w-3xl mx-auto flex flex-col sm:flex-row items-center text-center sm:text-left gap-8"
                   >
-                    <img loading="lazy"
+                    <ImageLoader
                       src={foundingMember.image}
                       alt={foundingMember.name}
-                      className="w-36 h-36 rounded-lg object-cover border-4 border-primary flex-shrink-0"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.onerror = null;
-                        target.src = "https://via.placeholder.com/300x300?text=No+Image";
-                      }}
+                      containerClassName="w-36 h-36 flex-shrink-0"
+                      className="w-full h-full rounded-lg object-cover border-4 border-primary"
                     />
                     <div>
                       <div className="flex items-center justify-center sm:justify-start mb-2">
@@ -175,15 +172,11 @@ export default function TeamFaculty() {
                                    dark:hover:shadow-[0_0_10px_rgba(255,255,255,0.7)] hover:scale-[1.02]
                                    transition-all duration-300 p-6 flex flex-col items-center text-center h-full cursor-pointer relative"
                       >
-                        <img loading="lazy"
+                        <ImageLoader
                           src={member.image}
                           alt={member.name}
-                          className="w-32 h-32 rounded-lg object-cover mb-4 border-2 border-muted dark:border-gray-700"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.onerror = null;
-                            target.src = "https://via.placeholder.com/300x300?text=No+Image";
-                          }}
+                          containerClassName="w-32 h-32 mb-4"
+                          className="w-full h-full rounded-lg object-cover border-2 border-muted dark:border-gray-700"
                         />
                         <div className="flex flex-col items-center justify-center mb-2 min-h-[56px] w-full px-2">
                           <h3 className="font-semibold text-xl text-gray-900 dark:text-white line-clamp-2">

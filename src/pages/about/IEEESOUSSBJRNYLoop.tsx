@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { journeyItems, type JourneyItem } from "@/data/journeyData";
-import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
+import { collection, onSnapshot, query, orderBy } from "@/lib/firestore-client";
 import { db } from "../../firebase";
 
 function JourneySectionBackground({ imageUrl }: { imageUrl?: string }) {
@@ -235,3 +235,4 @@ export default function IEEESOUSSBJRNYLoop() {
     </div>
   );
 }
+

@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import Loader from "@/components/Loader";
+import TopLoader from "@/components/TopLoader";
 import AIAssistant from "@/components/AIAssistant";
 import { Button } from "@/components/ui/button";
 
@@ -109,28 +110,6 @@ class ErrorBoundary extends React.Component<{children: React.ReactNode}, {hasErr
 }
 
 function App() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const handleLoad = () => {
-      setLoading(false);
-    };
-
-    if (document.readyState === "complete") {
-      setLoading(false);
-    } else {
-      window.addEventListener("load", handleLoad);
-      // Hard cap — don't show loader forever if something hangs (3s as in original InitialLoader)
-      const timer = setTimeout(handleLoad, 3000);
-      return () => {
-        window.removeEventListener("load", handleLoad);
-        clearTimeout(timer);
-      };
-    }
-  }, []);
-
-  if (loading) return <Loader />;
-
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
@@ -142,8 +121,9 @@ function App() {
               <ScrollToTop />
               <ScrollRevealProvider />
               <ScrollProgressBar />
+              <TopLoader />
               <AIAssistant />
-              <Suspense fallback={<Loader />}>
+              <Suspense fallback={<div className="min-h-screen bg-transparent" />}>
                 <Routes>
                   {/* Main Pages */}
                   <Route path="/" element={<Index />} />
@@ -165,7 +145,14 @@ function App() {
                   <Route path="/blogs" element={<BlogList />} />
                   <Route path="/blogs/category/:category" element={<BlogList />} />
                   <Route path="/blogs/:id" element={<BlogDetail />} />
-                  <Route path="/write-blog" element={<WriteBlog />} />
+                  <Route
+                    path="/write-blog"
+                    element={
+                      <ProtectedRoute>
+                        <WriteBlog />
+                      </ProtectedRoute>
+                    }
+                  />
 
                   {/* SIGs Pages */}
                   <Route path="/sigs" element={<SIGs />} />

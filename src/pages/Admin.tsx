@@ -15,7 +15,7 @@ import AdminLayout from "../Admin/AdminLayout";
 import UserManagement from "../Admin/UserManagement";
 import UserModal from "../Admin/UserModal";
 import { db } from "../firebase";
-import { doc, deleteDoc, collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { doc, deleteDoc, collection, addDoc, serverTimestamp } from "@/lib/firestore-client";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
@@ -37,7 +37,6 @@ const Admin = () => {
 
   // Navigation handler from dashboard to specific tabs
   const handleNavigate = (section: string) => {
-    console.log("Navigating to:", section);
     switch (section) {
       case 'events': 
         setActiveTab('events'); 
@@ -352,3 +351,4 @@ const Admin = () => {
 };
 
 export default Admin;
+

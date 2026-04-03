@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "@/lib/firestore-client";
 import { db } from "../firebase";
 import { Link } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
@@ -423,3 +423,4 @@ export default function Achievement() {
         </PageLayout>
     );
 }
+

@@ -5,7 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { Medal, Trophy, Globe, GraduationCap, Calendar, User } from "lucide-react";
 import { TypingAnimation } from "@/components/TypingAnimation";
 import { useState, useEffect } from "react";
-import { collection, getDocs, query, orderBy, onSnapshot } from "firebase/firestore";
+import { collection, getDocs, query, orderBy, onSnapshot } from "@/lib/firestore-client";
 import { db } from "../firebase";
 
 // ─── Component ─────────────────────────────────────────────────────────────────
@@ -247,3 +247,4 @@ export default function Achievements() {
         </PageLayout>
     );
 }
+

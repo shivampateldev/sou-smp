@@ -83,7 +83,26 @@ export default function AIAssistant() {
     }
   }, [messages, isNearBottom]);
 
-  const handleQuickOption = (option: QuickOption) => {
+  const fetchChatResponse = async (userInput: string) => {
+    try {
+      const response = await fetch("http://localhost:3001/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: userInput })
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || "Server error");
+      }
+      const data = await response.json();
+      return data.reply;
+    } catch (error: any) {
+      return "My AI brain seems to be offline at the moment. Please try again later or use the Quick Options!";
+    }
+  };
+
+  const handleQuickOption = async (option: QuickOption) => {
     const userMessage: Message = {
       id: `user-${Date.now()}`,
       text: option.label,
@@ -91,6 +110,8 @@ export default function AIAssistant() {
       timestamp: new Date()
     };
 
+    setMessages(prev => [...prev, userMessage]);
+    
     const botMessage: Message = {
       id: `bot-${Date.now()}`,
       text: option.response,
@@ -98,10 +119,10 @@ export default function AIAssistant() {
       timestamp: new Date()
     };
 
-    setMessages(prev => [...prev, userMessage, botMessage]);
+    setMessages(prev => [...prev, botMessage]);
   };
 
-  const handleCustomMessage = () => {
+  const handleCustomMessage = async () => {
     if (!customInput.trim()) return;
 
     const userMessage: Message = {
@@ -111,33 +132,20 @@ export default function AIAssistant() {
       timestamp: new Date()
     };
 
-    let botResponse = "I'm a simple assistant with predefined responses. Please use the quick options above, or visit our Contact page for specific inquiries. Our team will be happy to help you!";
+    setMessages(prev => [...prev, userMessage]);
+    const inputToProcess = customInput;
+    setCustomInput("");
 
-    const lowerInput = customInput.toLowerCase();
-
-    if (lowerInput.includes("join") || lowerInput.includes("membership") || lowerInput.includes("register")) {
-      botResponse = QUICK_OPTIONS.find(opt => opt.id === "join")?.response || botResponse;
-    } else if (lowerInput.includes("event") || lowerInput.includes("workshop") || lowerInput.includes("seminar")) {
-      botResponse = QUICK_OPTIONS.find(opt => opt.id === "events")?.response || botResponse;
-    } else if (lowerInput.includes("contact") || lowerInput.includes("reach") || lowerInput.includes("email") || lowerInput.includes("phone")) {
-      botResponse = QUICK_OPTIONS.find(opt => opt.id === "contact")?.response || botResponse;
-    } else if (lowerInput.includes("benefit") || lowerInput.includes("advantage") || lowerInput.includes("why")) {
-      botResponse = QUICK_OPTIONS.find(opt => opt.id === "benefits")?.response || botResponse;
-    } else if (lowerInput.includes("about") || lowerInput.includes("what is") || lowerInput.includes("who are")) {
-      botResponse = QUICK_OPTIONS.find(opt => opt.id === "about")?.response || botResponse;
-    } else if (lowerInput.includes("chapter") || lowerInput.includes("wie") || lowerInput.includes("sps") || lowerInput.includes("sight")) {
-      botResponse = QUICK_OPTIONS.find(opt => opt.id === "chapters")?.response || botResponse;
-    }
+    const reply = await fetchChatResponse(inputToProcess);
 
     const botMessage: Message = {
       id: `bot-${Date.now()}`,
-      text: botResponse,
+      text: reply,
       sender: "bot",
       timestamp: new Date()
     };
 
-    setMessages(prev => [...prev, userMessage, botMessage]);
-    setCustomInput("");
+    setMessages(prev => [...prev, botMessage]);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -267,7 +275,19 @@ export default function AIAssistant() {
                       : "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-tl-none border border-gray-200 dark:border-gray-600"
                   )}
                 >
-                  <p className="whitespace-pre-line leading-relaxed">{message.text}</p>
+                  <p className="whitespace-pre-line leading-relaxed">
+                    {message.text.split(/(\[.*?\]\(.*?\))/g).map((part, i) => {
+                      const match = part.match(/\[(.*?)\]\((.*?)\)/);
+                      if (match) {
+                        return (
+                          <a key={i} href={match[2]} className="text-blue-600 dark:text-blue-400 underline font-semibold hover:text-blue-800 transition-colors">
+                            {match[1]}
+                          </a>
+                        );
+                      }
+                      return <span key={i}>{part}</span>;
+                    })}
+                  </p>
                   <p className={cn(
                     "text-[10px] mt-1.5 font-medium opacity-60",
                     message.sender === "user" ? "text-right" : "text-left"

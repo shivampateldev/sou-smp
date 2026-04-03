@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "@/lib/firestore-client";
 import { db } from "../firebase";
 import { Search } from "lucide-react";
 import PageLayout from "@/components/PageLayout";
@@ -139,3 +139,4 @@ export default function BranchAwards() {
     </PageLayout>
   );
 }
+

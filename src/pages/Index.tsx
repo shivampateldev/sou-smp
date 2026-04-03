@@ -20,9 +20,7 @@ export default function Index() {
           }, 100);
         }
       }
-    } catch (err) {
-      console.error("Error in Index scroll effect:", err);
-    }
+    } catch (err) {}
   }, []);
 
   return (

@@ -1,6 +1,9 @@
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
+import { configureBrowserConsole } from './lib/console-guard'
+
+configureBrowserConsole();
 
 // Create a wrapper component to ensure we have control over the full viewport
 const AppWrapper = () => {

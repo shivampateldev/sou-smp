@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { BLOG_CATEGORIES, BlogCategory } from "@/types/blog";
+import CardSkeleton from "@/components/CardSkeleton";
+import ImageLoader from "@/components/ImageLoader";
 
 const CATEGORY_COLORS: Record<string, string> = {
   blog: "bg-orange-100 text-orange-700 border-orange-200",
@@ -173,8 +175,8 @@ export default function BlogList() {
           {/* Blog Grid */}
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="h-72 rounded-2xl bg-muted/20 animate-pulse" />
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <CardSkeleton key={i} />
               ))}
             </div>
           ) : filteredBlogs.length > 0 ? (
@@ -194,11 +196,11 @@ export default function BlogList() {
                     {/* Image — always fully visible, no cropping */}
                     <div className="w-full bg-muted/10 flex items-center justify-center overflow-hidden" style={{ height: '200px' }}>
                       {firstImage ? (
-                        <img
-                          loading="lazy"
+                        <ImageLoader
                           src={firstImage}
                           alt={blog.title}
-                          className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
+                          containerClassName="w-full h-full"
+                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                         />
                       ) : (
                         <div className="flex flex-col items-center justify-center text-muted-foreground/30 gap-2">

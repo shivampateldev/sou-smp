@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Calendar, ChevronRight, ChevronLeft } from "lucide-react";
 import { journeyItems, type JourneyItem } from "@/data/journeyData";
-import { collection, getDocs, doc, getDoc, onSnapshot, query, orderBy } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc, onSnapshot, query, orderBy } from "@/lib/firestore-client";
 import { db } from "../../firebase";
 import App from "../../App.tsx";
 import "../../App.css";
@@ -45,7 +45,6 @@ export default function JourneyDetails() {
         setLoading(false);
       },
       (error) => {
-        console.error("Error fetching journey data:", error);
         // Fallback to static data if Firebase fails
         setAllJourneyItems(journeyItems);
         setLoading(false);
@@ -58,15 +57,10 @@ export default function JourneyDetails() {
 
   useEffect(() => {
     if (loading) return;
-    
-    console.log('JourneyDetails - id:', id);
-    console.log('JourneyDetails - allJourneyItems:', allJourneyItems);
-    
+
     const found = allJourneyItems.find((j) => j.id === id);
     const idx = allJourneyItems.findIndex((j) => j.id === id);
-    console.log('JourneyDetails - found:', found);
-    console.log('JourneyDetails - idx:', idx);
-    
+
     setItem(found ?? null);
     setItemIndex(idx >= 0 ? idx : 0);
     setSlideIndex(0);
@@ -299,3 +293,4 @@ export default function JourneyDetails() {
     </div>
   );
 }
+

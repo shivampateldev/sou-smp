@@ -55,7 +55,6 @@ const NAV_ITEMS: NavItem[] = [
     title: "Achievement",
     children: [
       { title: "Branch Awards", href: "/achievement/branch-awards" },
-      { title: "Newsletter", href: "/achievement/newsletter" },
       { title: "Student Achievement", href: "/achievement/student" },
     ],
   },

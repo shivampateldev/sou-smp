@@ -52,7 +52,7 @@ export default function WhyJoinSection() {
             <div
               key={feature.id}
               className={`flex flex-col ${isEven ? "md:flex-row-reverse" : "md:flex-row"
-                } gap-8 md:gap-12 items-center`}
+                } gap-8 md:gap-20 items-center`}
             >
               {/* Image — heavy slide + rotate from outer edge */}
               <div
@@ -73,7 +73,7 @@ export default function WhyJoinSection() {
 
               {/* Text — slides in with blur from opposite edge */}
               <div
-                className={`w-full md:w-1/2 reveal ${isEven ? "fade-left" : "fade-right"} delay-2`}
+                className={`w-full md:w-1/2 reveal ${isEven ? "fade-left" : "fade-right"} delay-2 md:pl-8`}
               >
                 {/* Number badge */}
                 <span className="inline-block text-6xl font-black text-primary/15 dark:text-primary/20 leading-none mb-2 select-none">

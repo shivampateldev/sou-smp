@@ -1,21 +1,11 @@
 
-import { useEffect } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { TypingAnimation } from "@/components/TypingAnimation";
 
 export default function NotFound() {
-  const location = useLocation();
-
-  useEffect(() => {
-    console.error(
-      "404 Error: User attempted to access non-existent route:",
-      location.pathname
-    );
-  }, [location.pathname]);
-
   return (
     <PageLayout showFooter>
       <main className="pb-16 min-h-screen flex items-center justify-center py-24">

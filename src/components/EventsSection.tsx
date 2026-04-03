@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { collection, query, where, orderBy, limit, onSnapshot } from "firebase/firestore";
+import { collection, query, where, orderBy, limit, onSnapshot } from "@/lib/firestore-client";
 import { db } from "@/firebase";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
@@ -49,14 +49,34 @@ function SlideCard({ event, sliding, expanded, onToggleExpand }: SlideCardProps)
   }, [sliding]);
 
   return (
-    <div ref={cardRef} className="es-card es-slide-in">
+    <div ref={cardRef} className="es-card es-slide-in relative">
+      {/* Decorative background blobs based on poster image */}
+      <div 
+        className="absolute -top-20 -right-20 w-64 h-64 rounded-full opacity-[0.35] pointer-events-none"
+        style={{ 
+          backgroundImage: `url(${event.image})`, 
+          backgroundSize: 'cover', 
+          backgroundPosition: 'center', 
+          filter: 'blur(50px)' 
+        }}
+      />
+      <div 
+        className="absolute -bottom-16 -left-16 w-56 h-56 rounded-full opacity-[0.25] pointer-events-none"
+        style={{ 
+          backgroundImage: `url(${event.image})`, 
+          backgroundSize: 'cover', 
+          backgroundPosition: 'center', 
+          filter: 'blur(45px)' 
+        }}
+      />
+
       {/* Left: image */}
-      <div className="es-img-side">
+      <div className="es-img-side relative z-10 w-full md:w-auto">
         <img loading="lazy" src={event.image} alt={event.title} />
       </div>
 
       {/* Right: details */}
-      <div className="es-detail-side">
+      <div className="es-detail-side relative z-10">
         <h3 className="es-title">{event.title}</h3>
 
         <div className="es-meta">
@@ -324,16 +344,17 @@ export default function EventsSection() {
           align-items: center;
           justify-content: center;
           padding: 1.25rem;
-          background: var(--muted, #f8f9fa);
+          background: rgba(248, 249, 250, 0.4); /* translouscent version of #f8f9fa */
+          backdrop-filter: blur(8px);
           transition: background-color 0.3s ease;
         }
         
         .es-card:hover .es-img-side {
-          background: #f1f5f9;
+          background: rgba(241, 245, 249, 0.6); /* translouscent version of #f1f5f9 */
         }
         
         @media (max-width: 620px) {
-          .es-img-side { width: 100%; padding: 1rem 1rem 0; background: transparent; }
+          .es-img-side { width: 100%; padding: 1rem 1rem 0; background: transparent; backdrop-filter: none; }
         }
         .es-img-side img {
           width: 100%;
@@ -477,13 +498,13 @@ export default function EventsSection() {
 
         {/* Tabs */}
         <div className="reveal fade-up delay-1 es-tabs">
-          <button 
+          <button
             className={`es-tab-btn ${activeTab === 'recent' ? 'active' : ''}`}
             onClick={() => setActiveTab('recent')}
           >
             Recent Events
           </button>
-          <button 
+          <button
             className={`es-tab-btn ${activeTab === 'upcoming' ? 'active' : ''}`}
             onClick={() => setActiveTab('upcoming')}
           >
@@ -533,3 +554,4 @@ export default function EventsSection() {
     </>
   );
 }
+

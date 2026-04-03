@@ -20,7 +20,7 @@ const AwardDetails = () => {
   const [award, setAward] = useState<Award | null>(null);
   const [loading, setLoading] = useState(true);
   const [isDark, setIsDark] = useState(false);
-  
+
   // Enhanced theme detection - connect with existing navbar theme toggle
   useEffect(() => {
     // Initial theme check
@@ -33,21 +33,21 @@ const AwardDetails = () => {
         console.error("Error checking theme:", error);
       }
     };
-    
+
     // Do initial check
     checkTheme();
-    
+
     // Set up observer to monitor theme changes from navbar
     const observer = new MutationObserver(() => {
       checkTheme();
     });
-    
+
     // Watch for class changes on html element
-    observer.observe(document.documentElement, { 
+    observer.observe(document.documentElement, {
       attributes: true,
-      attributeFilter: ['class'] 
+      attributeFilter: ['class']
     });
-    
+
     // Cleanup observer
     return () => observer.disconnect();
   }, []);
@@ -88,14 +88,14 @@ const AwardDetails = () => {
   // Function to format description text with bold headings
   const formatDescription = (text) => {
     if (!text) return null;
-    
+
     // Split the text by lines
     const lines = text.split('\n');
-    
+
     return lines.map((line, index) => {
       // Check if the line contains a heading pattern (word followed by colon)
       const headingMatch = line.match(/^([A-Za-z\s]+):(.*)$/);
-      
+
       if (headingMatch) {
         // If it's a heading, render it with bold heading and normal text
         return (
@@ -221,8 +221,8 @@ const AwardDetails = () => {
   return (
     <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-blue-50'}`}>
       <div className="max-w-4xl mx-auto pt-8 px-4 pb-16">
-        <Button 
-          variant={isDark ? "ghost" : "outline"} 
+        <Button
+          variant={isDark ? "ghost" : "outline"}
           className="mb-6"
           onClick={() => window.history.length > 1 ? navigate(-1) : navigate('/')}
         >
@@ -238,9 +238,8 @@ const AwardDetails = () => {
             Award Image
           </h2>
           <div className="flex justify-center">
-            <div className={`relative w-full max-w-md overflow-hidden rounded-lg shadow-lg transition-transform hover:scale-[1.02] ${
-              isDark ? 'border border-gray-700' : 'border border-blue-200'
-            }`}>
+            <div className={`relative w-full max-w-md overflow-hidden rounded-lg shadow-lg transition-transform hover:scale-[1.02] ${isDark ? 'border border-gray-700' : 'border border-blue-200'
+              }`}>
               {award.imageUrl ? (
                 <>
                   <img
@@ -249,17 +248,14 @@ const AwardDetails = () => {
                     className={`w-full h-auto object-contain ${isDark ? 'bg-gray-800' : 'bg-white'}`}
                     loading="lazy"
                   />
-                  <div className={`absolute inset-0 bg-gradient-to-t ${
-                    isDark ? 'from-gray-900/50' : 'from-blue-900/20'
-                  } to-transparent pointer-events-none`}></div>
+                  <div className={`absolute inset-0 bg-gradient-to-t ${isDark ? 'from-gray-900/50' : 'from-blue-900/20'
+                    } to-transparent pointer-events-none`}></div>
                 </>
               ) : (
-                <div className={`w-full h-64 flex items-center justify-center ${
-                  isDark ? 'bg-gray-800' : 'bg-white'
-                }`}>
-                  <TrophyIcon className={`h-20 w-20 ${
-                    isDark ? 'text-gray-600' : 'text-blue-200'
-                  }`} />
+                <div className={`w-full h-64 flex items-center justify-center ${isDark ? 'bg-gray-800' : 'bg-white'
+                  }`}>
+                  <TrophyIcon className={`h-20 w-20 ${isDark ? 'text-gray-600' : 'text-blue-200'
+                    }`} />
                 </div>
               )}
             </div>
@@ -267,9 +263,8 @@ const AwardDetails = () => {
         </div>
 
         {/* Title */}
-        <h1 className={`text-3xl md:text-4xl font-bold mb-4 ${
-          isDark ? 'text-blue-300' : 'text-blue-900'
-        }`}>
+        <h1 className={`text-3xl md:text-4xl font-bold mb-4 ${isDark ? 'text-blue-300' : 'text-blue-900'
+          }`}>
           {award.title}
         </h1>
 
@@ -287,7 +282,7 @@ const AwardDetails = () => {
             </div>
           )}
         </div>
-       
+
         {/* Description */}
         <div className={`prose max-w-none ${isDark ? 'text-gray-300' : 'text-black'}`}>
           <h2 className={`text-2xl font-semibold mb-4 ${isDark ? 'text-gray-200' : 'text-black'}`}>

@@ -39,11 +39,10 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
           }
         }
 
-        // CORE ADMIN BYPASS
-        if (userEmail === "ptarang69@gmail.com") {
-          role = "admin";
-        }
-
+        // ADMIN AUTHORIZATION CHECK
+        // This strictly relies on the 'role' field in the 'users' Firestore collection.
+        // The hardcoded email check has been removed for production-grade security.
+        
         if (role === 'admin') {
           setIsAuthorized(true);
         } else {
