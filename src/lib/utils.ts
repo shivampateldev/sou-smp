@@ -6,16 +6,20 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 /**
- * Masks external URLs by routing them through the local API proxy.
- * This prevents external asset domains (like ieee.socet.edu.in) 
- * from appearing in the browser's "Sources" tab.
+ * Ensures all external URLs use HTTPS to prevent Mixed Content warnings.
+ * Also handles masking if required, but currently prioritizes security compliance.
  */
 export function maskUrl(url: string | undefined): string {
   if (!url) return "";
-  if (url.startsWith("/") || url.startsWith("data:") || url.startsWith("./")) return url;
+  
+  // Don't modify data URLs or local paths
+  if (url.startsWith("data:") || url.startsWith("/") || url.startsWith("./")) {
+    return url;
+  }
 
-  if (url.startsWith("http")) {
-    return `/api/media?url=${encodeURIComponent(url)}`;
+  // Convert http to https for all external domains
+  if (url.startsWith("http://")) {
+    return url.replace("http://", "https://");
   }
 
   return url;

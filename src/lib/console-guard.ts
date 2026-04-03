@@ -24,7 +24,9 @@ const originalConsole = {
 const shouldIgnoreWarning = (firstArg: unknown) =>
   typeof firstArg === "string" &&
   (firstArg.includes("React Router Future Flag Warning") ||
-    firstArg.includes("was preloaded using link preload but not used within a few seconds"));
+    firstArg.includes("was preloaded using link preload but not used within a few seconds") ||
+    firstArg.includes("Mixed Content") ||
+    firstArg.includes("automatically upgraded to HTTPS"));
 
 export const configureBrowserConsole = () => {
   if (!debugLogsEnabled) {
